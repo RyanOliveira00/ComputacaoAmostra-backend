@@ -16,6 +16,12 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/config": ["./src/config"],
+      "@app/common": ["./src/common"],
+      "@app/utils": ["./src/utils"],
+      "@app/modules": ["./src/modules"]
+    }
   }
 }
