@@ -4,13 +4,21 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly keyType: 'DEV' | 'NORMAL') {}
+  constructor(private readonly keyType: 'DEV' | 'NORMAL' | 'ADMIN') {}
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    const apiKey = configurationService.getValue(`API_${this.keyType}_KEY`);
-
-    return apiKey === request.headers.api;
+    switch (this.keyType) {
+      case 'ADMIN':
+        return (
+          request.headers.email === configurationService.getValue('ADMIN_EMAIL')
+        );
+      default:
+        return (
+          request.headers.apiKey ===
+          configurationService.getValue(`API_${this.keyType}_KEY`)
+        );
+    }
   }
 }
