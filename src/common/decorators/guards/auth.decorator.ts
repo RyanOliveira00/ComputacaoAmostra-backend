@@ -1,6 +1,7 @@
-import { configurationService } from '@app/config';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { isEmailAdmin, isApiKeyValid } from '@app/common';
+import { RequestWithCustomHeader } from '@app/types';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -8,17 +9,12 @@ export class AuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request = context.switchToHttp().getRequest();
-    switch (this.keyType) {
-      case 'ADMIN':
-        return (
-          request.headers.email === configurationService.getValue('ADMIN_EMAIL')
-        );
-      default:
-        return (
-          request.headers.apiKey ===
-          configurationService.getValue(`API_${this.keyType}_KEY`)
-        );
-    }
+    const request: RequestWithCustomHeader = context
+      .switchToHttp()
+      .getRequest();
+
+    if (this.keyType === 'ADMIN') return isEmailAdmin(request.headers.email);
+
+    return isApiKeyValid(request.headers.api, this.keyType);
   }
 }

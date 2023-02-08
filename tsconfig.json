@@ -21,6 +21,7 @@
       "@app/config": ["./src/config"],
       "@app/common": ["./src/common"],
       "@app/utils": ["./src/utils"],
+      "@app/types": ["./src/@types"],
       "@app/modules": ["./src/modules"]
     }
   }
