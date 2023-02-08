@@ -9,7 +9,7 @@ import { AppController } from './app.controller';
     ConfigModule.forRoot(),
     ThrottlerModule.forRoot({
       ttl: 60 * 20,
-      limit: 5,
+      limit: 50,
     }),
   ],
   controllers: [AppController],

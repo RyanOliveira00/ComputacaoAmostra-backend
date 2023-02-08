@@ -1,8 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@app/common';
 
 @Controller('/health')
 export class AppController {
   @Get()
+  @UseGuards(new AuthGuard('NORMAL'))
   healthCheck(): string {
     return 'Ok';
   }
