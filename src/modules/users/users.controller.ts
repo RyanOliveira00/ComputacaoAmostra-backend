@@ -1,8 +1,16 @@
-import { AuthGuard } from '@app/common';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard, GetInCookies } from '@app/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Query,
+  Res,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { UsersService } from './users.service';
 
-@UseGuards(new AuthGuard('CLIENT'))
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -12,8 +20,18 @@ export class UsersController {
     return this.usersService.validateCaptcha(body);
   }
 
+  @Get('set')
+  aaa(@Res({ passthrough: true }) res: Response) {
+    res.cookie('userId', 'salvee');
+    return 'ok';
+  }
+
   @Post('vote')
-  vote(@Body() body: string) {
-    return this.usersService.validateCaptcha(body);
+  @UseGuards(new AuthGuard('CLIENT'))
+  async vote(
+    @Query('projectId') projectId: string,
+    @GetInCookies('userId') userId: string,
+  ) {
+    return await this.usersService.vote(projectId, userId);
   }
 }

@@ -1,9 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import type { RequestWithCustomHeader } from '../../@types/index';
 
-export const GetUserInCookies = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
+export const GetInCookies = createParamDecorator(
+  (data: string, ctx: ExecutionContext) => {
     const request: RequestWithCustomHeader = ctx.switchToHttp().getRequest();
-    return request.headers.cookie;
+    return request.cookies[data];
   },
 );

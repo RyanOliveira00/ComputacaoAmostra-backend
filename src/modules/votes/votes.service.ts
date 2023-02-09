@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { TProject } from '../projects';
 import { CreateVoteDto } from './dto/create-vote.dto';
 
 @Injectable()
@@ -7,7 +8,7 @@ export class VotesService {
     return 'This action adds a new vote';
   }
 
-  findAll() {
+  findAll(filter: TProject['name']) {
     return `This action returns all votes`;
   }
 
