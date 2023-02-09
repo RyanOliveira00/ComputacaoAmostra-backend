@@ -1,4 +1,4 @@
-import { TUser, TProject } from '@app/modules';
+import { TProject, TUser } from '@app/modules';
 export type TVote = {
   id: string;
   user_id: TUser | TUser['id'];

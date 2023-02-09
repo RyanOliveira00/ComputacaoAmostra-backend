@@ -10,4 +10,5 @@ export type TProject = {
   status: boolean;
   github: string;
   youtube: string;
+  course: 'bcc' | 'ecomp';
 };

@@ -1,5 +1,5 @@
 import { AuthGuard } from '@app/common';
-import { Controller, Get, Body, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @UseGuards(new AuthGuard('CLIENT'))

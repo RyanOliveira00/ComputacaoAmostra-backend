@@ -1,3 +1,5 @@
+import { TUser } from 'src/modules/users/types';
+import { TVote } from 'src/modules/votes/types';
 import {
   Column,
   Entity,
@@ -5,11 +7,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TProject } from '../types';
 import { User } from '../../users/entities/user.entity';
 import { Vote } from '../../votes/entities/vote.entity';
-import { TUser } from 'src/modules/users/types';
-import { TVote } from 'src/modules/votes/types';
+import { TProject } from '../types';
 
 @Entity({ name: 'projects' })
 export class Project implements TProject {
@@ -39,4 +39,7 @@ export class Project implements TProject {
 
   @Column({ type: 'varchar' })
   youtube: string;
+
+  @Column({ type: 'varchar', enum: ['bcc', 'ecomp'] })
+  course: 'bcc' | 'ecomp';
 }

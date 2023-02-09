@@ -4,11 +4,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TVote } from '../types';
-import { User } from '../../users/entities/user.entity';
 import { Project } from '../../projects/entities/project.entity';
 import { TProject } from '../../projects/types';
+import { User } from '../../users/entities/user.entity';
 import { TUser } from '../../users/types';
+import { TVote } from '../types';
 
 @Entity({ name: 'votes' })
 export class Vote implements TVote {

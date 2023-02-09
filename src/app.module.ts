@@ -1,3 +1,4 @@
+import { AdminModule, ProjectsModule, UsersModule } from '@app/modules';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -6,7 +7,6 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { configurationService } from './config';
-import { AdminModule, ProjectsModule, UsersModule } from '@app/modules';
 
 @Module({
   imports: [

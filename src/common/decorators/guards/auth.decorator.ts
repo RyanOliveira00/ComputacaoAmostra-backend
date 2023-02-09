@@ -1,7 +1,7 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { isEmailAdmin, isApiKeyValid } from '@app/common';
+import { isApiKeyValid, isEmailAdmin } from '@app/common';
 import { RequestWithCustomHeader } from '@app/types';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

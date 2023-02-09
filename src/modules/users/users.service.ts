@@ -1,7 +1,6 @@
 import { configurationService } from '@app/config';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 

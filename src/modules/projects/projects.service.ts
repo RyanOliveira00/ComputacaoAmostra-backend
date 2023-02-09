@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { TProject } from './types';
 
 @Injectable()
 export class ProjectsService {
@@ -7,15 +8,15 @@ export class ProjectsService {
     return 'This action adds a new project';
   }
 
-  findAll() {
+  findAll(filter: TProject['course']) {
     return `This action returns all projects`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} project`;
   }
 
-  remove(id: number) {
+  changeStatus(id: string) {
     return `This action removes a #${id} project`;
   }
 }
