@@ -6,7 +6,8 @@ export type TProject = {
   name: string;
   team: string[];
   votes: TVote[] | TVote['id'][];
-  vote_count: number;
+  total_votes: number;
+  unique_votes: number;
   status: boolean;
   github: string;
   youtube: string;

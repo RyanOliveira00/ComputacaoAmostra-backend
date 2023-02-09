@@ -29,7 +29,10 @@ export class Project implements TProject {
   votes: string[] | TVote[];
 
   @Column({ default: 0, insert: false })
-  vote_count: number;
+  total_votes: number;
+
+  @Column({ default: 0, insert: false })
+  unique_votes: number;
 
   @Column({ default: true })
   status: boolean;
