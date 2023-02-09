@@ -1,3 +1,5 @@
+import { HttpModuleOptions } from '@nestjs/axios';
+import { ThrottlerModuleOptions } from '@nestjs/throttler';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 
@@ -47,6 +49,20 @@ export class ConfigurationService {
       ],
       entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
       synchronize: true,
+    };
+  }
+
+  public getThrottleConfig(): ThrottlerModuleOptions {
+    return {
+      ttl: 60 * 20,
+      limit: 50,
+    };
+  }
+
+  public getHttpModuleConfig(): HttpModuleOptions {
+    return {
+      timeout: 5000,
+      maxRedirects: 5,
     };
   }
 }

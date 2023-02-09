@@ -13,8 +13,20 @@ export class AuthGuard implements CanActivate {
       .switchToHttp()
       .getRequest();
 
-    if (this.keyType === 'ADMIN') return isEmailAdmin(request.headers.email);
-
-    return isApiKeyValid(request.headers.api, this.keyType);
+    switch (this.keyType) {
+      case 'ADMIN':
+        return (
+          isApiKeyValid(request.headers.api, 'DEV') ||
+          (isEmailAdmin(request.headers.email) &&
+            isApiKeyValid(request.headers.api, 'NORMAL'))
+        );
+      case 'NORMAL':
+        return (
+          isApiKeyValid(request.headers.api, 'DEV') ||
+          isApiKeyValid(request.headers.api, 'NORMAL')
+        );
+      case 'DEV':
+        return isApiKeyValid(request.headers.api, 'DEV');
+    }
   }
 }

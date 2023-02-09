@@ -1,16 +1,22 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
+import { configurationService } from './config';
+import { AdminModule, ProjectsModule, UsersModule } from '@app/modules';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    ThrottlerModule.forRoot({
-      ttl: 60 * 20,
-      limit: 50,
-    }),
+    ThrottlerModule.forRoot(configurationService.getThrottleConfig()),
+    TypeOrmModule.forRoot(configurationService.getTypeOrmConfig(__dirname)),
+    HttpModule.register(configurationService.getHttpModuleConfig()),
+    UsersModule,
+    ProjectsModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [
