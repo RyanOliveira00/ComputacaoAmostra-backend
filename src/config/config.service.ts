@@ -1,6 +1,9 @@
 import { HttpModuleOptions } from '@nestjs/axios';
 import { ThrottlerModuleOptions } from '@nestjs/throttler';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import {
+  TypeOrmModuleAsyncOptions,
+  TypeOrmModuleOptions,
+} from '@nestjs/typeorm';
 import { join } from 'path';
 
 export class ConfigurationService {
@@ -33,22 +36,24 @@ export class ConfigurationService {
     return !this.isProduction();
   }
 
-  public getTypeOrmConfig(rootDir: string): TypeOrmModuleOptions {
+  public getTypeOrmConfig(rootDir: string): TypeOrmModuleAsyncOptions {
     return {
-      type: 'postgres',
-      host: this.getValue('POSTGRES_HOST'),
-      port: parseInt(this.getValue('POSTGRES_PORT'), 10),
-      username: this.getValue('POSTGRES_USER'),
-      password: this.getValue('POSTGRES_PASSWORD'),
-      database: this.getValue('POSTGRES_DATABASE'),
-      migrationsTableName: 'migrations',
-      autoLoadEntities: true,
-      migrations: [
-        join(rootDir, 'migration/*{.ts,.js}'),
-        join(rootDir, 'src/migration/*{.ts,.js}'),
-      ],
-      entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
-      synchronize: true,
+      useFactory: () => ({
+        type: 'postgres',
+        host: this.getValue('POSTGRES_HOST'),
+        port: parseInt(this.getValue('POSTGRES_PORT'), 10),
+        username: this.getValue('POSTGRES_USER'),
+        password: this.getValue('POSTGRES_PASSWORD'),
+        database: this.getValue('POSTGRES_DATABASE'),
+        migrationsTableName: 'migrations',
+        autoLoadEntities: true,
+        migrations: [
+          join(rootDir, 'migration/*{.ts,.js}'),
+          join(rootDir, 'src/migration/*{.ts,.js}'),
+        ],
+        entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
+        synchronize: true,
+      }),
     };
   }
 

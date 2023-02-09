@@ -12,7 +12,9 @@ import { configurationService } from './config';
   imports: [
     ConfigModule.forRoot(),
     ThrottlerModule.forRoot(configurationService.getThrottleConfig()),
-    TypeOrmModule.forRoot(configurationService.getTypeOrmConfig(__dirname)),
+    TypeOrmModule.forRootAsync(
+      configurationService.getTypeOrmConfig(__dirname),
+    ),
     HttpModule.register(configurationService.getHttpModuleConfig()),
     UsersModule,
     ProjectsModule,
