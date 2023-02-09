@@ -1,18 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { TProject } from '../projects';
 import { CreateVoteDto } from './dto/create-vote.dto';
+import { Vote } from './entities/vote.entity';
 
 @Injectable()
 export class VotesService {
-  create(createVoteDto: CreateVoteDto) {
-    return 'This action adds a new vote';
+  constructor(
+    @InjectRepository(Vote)
+    private readonly votesRepository: Repository<Vote>,
+  ) {}
+
+  async create(createVoteDto: CreateVoteDto) {
+    const vote = this.votesRepository.create(createVoteDto);
+    await this.votesRepository.save(vote);
   }
 
-  findAll(filter: TProject['name']) {
-    return `This action returns all votes`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} vote`;
+  async findAll(filter?: TProject['name']) {
+    const votes = await this.votesRepository.find({
+      relations: ['project_id'],
+    });
+    if (!filter) return votes;
+    return votes.filter(({ project_id }) =>
+      (project_id as TProject).name.includes(filter),
+    );
   }
 }

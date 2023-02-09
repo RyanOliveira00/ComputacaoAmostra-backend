@@ -4,24 +4,29 @@ import { Injectable } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { VotesService } from '../votes/votes.service';
-import { TProject } from '../projects/types';
-import { TUser } from './types';
 import { ProjectsService } from '../projects/projects.service';
+import { CreateVoteDto } from '../votes/dto/create-vote.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
   constructor(
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
     private readonly httpService: HttpService,
     private readonly voteService: VotesService,
     private readonly projectService: ProjectsService,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const user = this.usersRepository.create(createUserDto);
+    await this.usersRepository.save(user);
   }
 
   async findOne(id: string) {
-    return `This action returns a #${id} user`;
+    return await this.usersRepository.findOne({ where: { id } });
   }
 
   async validateCaptcha(captchaResponse: string) {
@@ -40,7 +45,7 @@ export class UsersService {
     return data;
   }
 
-  async vote(projectId: TProject['id'], userId: string) {
-    return { userId, projectId };
+  async vote(createVoteDto: CreateVoteDto) {
+    return await this.voteService.create(createVoteDto);
   }
 }
