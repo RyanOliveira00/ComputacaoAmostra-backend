@@ -1,9 +1,6 @@
 import { HttpModuleOptions } from '@nestjs/axios';
-import { ThrottlerModuleOptions } from '@nestjs/throttler';
-import {
-  TypeOrmModuleAsyncOptions,
-  TypeOrmModuleOptions,
-} from '@nestjs/typeorm';
+import { ThrottlerAsyncOptions } from '@nestjs/throttler';
+import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 
 export class ConfigurationService {
@@ -57,10 +54,12 @@ export class ConfigurationService {
     };
   }
 
-  public getThrottleConfig(): ThrottlerModuleOptions {
+  public getThrottleConfig(): ThrottlerAsyncOptions {
     return {
-      ttl: 60 * 20,
-      limit: 50,
+      useFactory: () => ({
+        ttl: 60 * 20,
+        limit: 50,
+      }),
     };
   }
 

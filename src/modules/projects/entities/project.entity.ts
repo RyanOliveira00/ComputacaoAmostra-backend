@@ -1,3 +1,4 @@
+import { CourseEnum, TProject, TUser, TVote, User, Vote } from '@app/modules';
 import {
   Column,
   Entity,
@@ -5,7 +6,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CourseEnum, TProject, TUser, TVote, User, Vote } from '@app/modules';
 
 @Entity({ name: 'projects' })
 export class Project implements TProject {

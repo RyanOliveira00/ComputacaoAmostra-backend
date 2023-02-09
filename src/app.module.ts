@@ -11,7 +11,7 @@ import { configurationService } from './config';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    ThrottlerModule.forRoot(configurationService.getThrottleConfig()),
+    ThrottlerModule.forRootAsync(configurationService.getThrottleConfig()),
     TypeOrmModule.forRootAsync(
       configurationService.getTypeOrmConfig(__dirname),
     ),

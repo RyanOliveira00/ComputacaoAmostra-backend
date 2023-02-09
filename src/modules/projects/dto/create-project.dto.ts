@@ -1,13 +1,13 @@
 import { CourseEnum, TUser } from '@app/modules';
 import {
-  IsString,
-  IsUUID,
-  IsNotEmpty,
-  IsArray,
   ArrayMaxSize,
   ArrayMinSize,
-  IsUrl,
+  IsArray,
   IsEnum,
+  IsNotEmpty,
+  IsString,
+  IsUrl,
+  IsUUID,
 } from 'class-validator';
 export class CreateProjectDto {
   @IsUUID()
