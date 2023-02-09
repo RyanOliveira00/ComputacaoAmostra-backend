@@ -2,7 +2,7 @@ import { AuthGuard } from '@app/common';
 import { Controller, Get, Body, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 
-@UseGuards(new AuthGuard('NORMAL'))
+@UseGuards(new AuthGuard('CLIENT'))
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

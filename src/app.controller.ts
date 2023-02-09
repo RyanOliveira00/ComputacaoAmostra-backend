@@ -4,7 +4,7 @@ import { AuthGuard } from '@app/common';
 @Controller('/health')
 export class AppController {
   @Get()
-  @UseGuards(new AuthGuard('NORMAL'))
+  @UseGuards(new AuthGuard('DEV'))
   healthCheck(): string {
     return 'Ok';
   }
