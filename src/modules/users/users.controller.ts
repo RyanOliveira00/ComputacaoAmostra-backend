@@ -4,18 +4,22 @@ import {
   Controller,
   Get,
   Post,
-  UseGuards,
-  Query,
   Put,
+  Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { VotesService } from '../votes';
 import { UsersService } from './users.service';
 
 @Controller('users')
 @UseGuards(new AuthGuard('CLIENT'))
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly votesService: VotesService,
+  ) {}
 
   @Get('validate_captcha')
   findOne(@Body() body: string) {
@@ -45,7 +49,7 @@ export class UsersController {
     @GetInCookies('token') userId: string,
     @GetSession() session: string,
   ) {
-    return await this.usersService.vote(
+    return await this.votesService.vote(
       {
         project_id: projectId,
         user_id: userId,
