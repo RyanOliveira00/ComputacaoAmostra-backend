@@ -7,3 +7,10 @@ export interface RequestWithCustomHeader extends Request {
     api: string;
   };
 }
+
+export type SessionPayload = {
+  id: string;
+  email: string;
+  iat: number;
+  exp: number;
+};

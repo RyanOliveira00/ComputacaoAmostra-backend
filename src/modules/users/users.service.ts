@@ -8,7 +8,11 @@ import { ProjectsService } from '../projects/projects.service';
 import { CreateVoteDto } from '../votes/dto/create-vote.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
+import { CreateSessionDto } from './dto/session-dto';
+import { JwtService } from '@nestjs/jwt';
+import { AccessException, TokenException } from '@app/common';
+import { SessionPayload } from '../../@types/index';
 
 @Injectable()
 export class UsersService {
@@ -17,16 +21,34 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
     private readonly httpService: HttpService,
     private readonly voteService: VotesService,
+    private readonly jwtService: JwtService,
     private readonly projectService: ProjectsService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
     const user = this.usersRepository.create(createUserDto);
     await this.usersRepository.save(user);
+    return user;
   }
 
-  async findOne(id: string) {
-    return await this.usersRepository.findOne({ where: { id } });
+  async generateSession(sessionDto: CreateSessionDto) {
+    const sessionPayload = { ...sessionDto };
+    const user = await this.findOne({ email: sessionDto.email });
+
+    if (!user) {
+      await this.create({ name: sessionDto.name, email: sessionDto.email });
+    }
+
+    const token = await this.jwtService.signAsync(sessionPayload, {
+      secret: configurationService.getValue('JWT_SECRET'),
+      expiresIn: configurationService.getValue('JWT_EXPIRE'),
+    });
+
+    return token;
+  }
+
+  async findOne(where: FindOptionsWhere<User>) {
+    return await this.usersRepository.findOne({ where });
   }
 
   async validateCaptcha(captchaResponse: string) {
@@ -45,7 +67,15 @@ export class UsersService {
     return data;
   }
 
-  async vote(createVoteDto: CreateVoteDto) {
-    return await this.voteService.create(createVoteDto);
+  async vote(createVoteDto: CreateVoteDto, session: string) {
+    try {
+      await this.jwtService.verify(session, {
+        secret: configurationService.getValue('JWT_SECRET'),
+      });
+      return 'sexo';
+      // return await this.voteService.create(createVoteDto);
+    } catch (error) {
+      throw new TokenException();
+    }
   }
 }

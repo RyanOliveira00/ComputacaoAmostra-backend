@@ -6,6 +6,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { VotesModule } from '../votes/votes.module';
 import { ProjectsModule } from '../projects/projects.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ProjectsModule } from '../projects/projects.module';
     HttpModule,
     VotesModule,
     ProjectsModule,
+    JwtModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],
