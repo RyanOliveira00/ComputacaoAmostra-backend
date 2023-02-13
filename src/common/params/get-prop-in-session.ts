@@ -1,5 +1,4 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { DeepPartial } from 'typeorm';
 import type { CustomRequest } from '../../@types/index';
 import { Session } from '../../@types/index';
 

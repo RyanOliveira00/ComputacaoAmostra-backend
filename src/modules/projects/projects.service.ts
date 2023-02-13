@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { Project } from './entities/project.entity';
-import { TProject, CourseEnum } from './types';
+import { TProject } from './types';
 
 @Injectable()
 export class ProjectsService {
