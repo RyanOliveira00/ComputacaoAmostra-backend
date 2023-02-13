@@ -1,11 +1,11 @@
-import { JwtService } from '@nestjs/jwt';
+import { TokenException } from '@app/common';
 import { configurationService } from '@app/config';
 import { Injectable } from '@nestjs/common';
-import { CreateSessionDto } from './dto/create-session.dto';
+import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { TokenException } from '@app/common';
+import { CreateSessionDto } from './dto/create-session.dto';
 
 @Injectable()
 export class AuthService {

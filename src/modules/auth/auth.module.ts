@@ -1,8 +1,8 @@
 import { Global, Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
-import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './auth.service';
 
 @Global()
 @Module({

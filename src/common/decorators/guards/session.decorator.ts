@@ -1,6 +1,5 @@
-import { isApiKeyValid, isEmailAdmin } from '@app/common';
 import { RequestWithCustomHeader } from '@app/types';
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../modules/auth/auth.service';
