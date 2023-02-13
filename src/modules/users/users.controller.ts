@@ -1,4 +1,4 @@
-import { AuthGuard, GetInCookies, GetSession, SessionGuard } from '@app/common';
+import { AuthGuard, GetInCookies, Public, SessionGuard } from '@app/common';
 import {
   Body,
   Controller,
@@ -33,6 +33,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Public()
   @Put('generate_session')
   async generateSession(
     @GetInCookies('userId') userId: string,
@@ -54,9 +55,7 @@ export class UsersController {
   async vote(
     @Query('projectId') projectId: string,
     @GetInCookies('token') userId: string,
-    @GetSession() session: string,
   ) {
-    await this.authService.verifySession(session);
     return await this.votesService.vote({
       project_id: projectId,
       user_id: userId,

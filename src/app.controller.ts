@@ -1,4 +1,4 @@
-import { AuthGuard } from '@app/common';
+import { AuthGuard, SessionGuard } from '@app/common';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 
 @Controller('/health')
