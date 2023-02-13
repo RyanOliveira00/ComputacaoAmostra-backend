@@ -1,12 +1,12 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectsModule } from '../projects/projects.module';
 import { VotesModule } from '../votes/votes.module';
 import { User } from './entities/user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { UsersService } from './users.service';
     HttpModule,
     VotesModule,
     ProjectsModule,
-    JwtModule,
+    AuthModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],

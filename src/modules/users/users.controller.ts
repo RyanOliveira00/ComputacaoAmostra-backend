@@ -1,4 +1,4 @@
-import { AuthGuard, GetInCookies, GetSession } from '@app/common';
+import { AuthGuard, GetInCookies, GetSession, SessionGuard } from '@app/common';
 import {
   Body,
   Controller,
@@ -10,20 +10,27 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { AuthService } from '../auth';
 import { VotesService } from '../votes';
 import { UsersService } from './users.service';
 
 @Controller('users')
-@UseGuards(new AuthGuard('CLIENT'))
+@UseGuards(new AuthGuard('CLIENT'), SessionGuard)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly votesService: VotesService,
+    private readonly authService: AuthService,
   ) {}
 
   @Get('validate_captcha')
-  findOne(@Body() body: string) {
+  validateCaptcha(@Body() body: string) {
     return this.usersService.validateCaptcha(body);
+  }
+
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
   }
 
   @Put('generate_session')
@@ -33,7 +40,7 @@ export class UsersController {
     @Query('name') name: string,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const token = await this.usersService.generateSession({
+    const token = await this.authService.generateSession({
       id: userId,
       email,
       name,
@@ -49,12 +56,10 @@ export class UsersController {
     @GetInCookies('token') userId: string,
     @GetSession() session: string,
   ) {
-    return await this.votesService.vote(
-      {
-        project_id: projectId,
-        user_id: userId,
-      },
-      session,
-    );
+    await this.authService.verifySession(session);
+    return await this.votesService.vote({
+      project_id: projectId,
+      user_id: userId,
+    });
   }
 }
