@@ -21,24 +21,40 @@ export class ProjectsController {
   @UseGuards(new AuthGuard('DEV'))
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {
-    return this.projectsService.create(createProjectDto);
+    try {
+      return this.projectsService.create(createProjectDto);
+    } catch (error) {
+      return { error };
+    }
   }
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get()
   findAll(@Query('filter') filterType: TProject['course']) {
-    return this.projectsService.findAll(filterType);
+    try {
+      return this.projectsService.findAll(filterType);
+    } catch (error) {
+      return { error };
+    }
   }
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.projectsService.findOne(id);
+    try {
+      return this.projectsService.findOne(id);
+    } catch (error) {
+      return { error };
+    }
   }
 
   @UseGuards(new AuthGuard('DEV'))
   @Delete('/status/:id')
   changeStatus(@Param('id') id: string) {
-    return this.projectsService.changeStatus(id);
+    try {
+      return this.projectsService.changeStatus(id);
+    } catch (error) {
+      return { error };
+    }
   }
 }

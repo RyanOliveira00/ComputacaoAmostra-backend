@@ -2,6 +2,7 @@ import { CourseEnum, TProject, TUser, TVote, User, Vote } from '@app/modules';
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -13,6 +14,7 @@ export class Project implements TProject {
   id: string;
 
   @OneToOne(() => User)
+  @JoinColumn()
   owner_id: string | TUser;
 
   @Column({ type: 'varchar' })

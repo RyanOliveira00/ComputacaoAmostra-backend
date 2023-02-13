@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindOptionsWhere } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { Project } from './entities/project.entity';
-import { TProject } from './types';
+import { TProject, CourseEnum } from './types';
 
 @Injectable()
 export class ProjectsService {
@@ -20,16 +20,23 @@ export class ProjectsService {
   }
 
   async findAll(filter?: TProject['course']) {
+    if (!Object.values({ bcc: 'bcc', ecomp: 'ecomp' }).includes(filter))
+      throw new HttpException(
+        'Filter type is invalid, try BCC or ECOMP.',
+        HttpStatus.BAD_REQUEST,
+      );
     const projects = await this.projectRepository.find({
       where: { status: true },
+      relations: ['votes', 'owner_id'],
     });
     if (!filter) return projects;
-    return projects.filter((projects) => projects.course === filter);
+    return projects.filter((projects) => projects.course === filter.toString());
   }
 
   async findOne(id: string) {
     const projects = await this.projectRepository.findOne({
       where: { id, status: true },
+      relations: ['votes', 'owner_id'],
     });
     return projects;
   }
@@ -40,5 +47,15 @@ export class ProjectsService {
     await this.projectRepository.save(project);
 
     return project;
+  }
+
+  async getVotes(id: string) {
+    const project = await this.findOne(id);
+
+    return {
+      total: project.total_votes,
+      unique: project.unique_votes,
+      votes: project.votes,
+    };
   }
 }
