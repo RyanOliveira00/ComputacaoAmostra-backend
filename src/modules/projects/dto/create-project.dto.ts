@@ -10,7 +10,7 @@ import {
   IsUUID,
 } from 'class-validator';
 export class CreateProjectDto {
-  // @IsUUID()
+  @IsUUID()
   owner_id: string | TUser;
 
   @IsString()
@@ -22,10 +22,10 @@ export class CreateProjectDto {
   @ArrayMinSize(3)
   team: string[];
 
-  // @IsUrl()
+  @IsUrl()
   github: string;
 
-  // @IsUrl()
+  @IsUrl()
   youtube: string;
 
   @IsEnum({ BCC: 'bcc', ECOMP: 'ecomp' })
