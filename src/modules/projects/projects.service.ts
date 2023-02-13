@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindOptionsWhere } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { Project } from './entities/project.entity';
 import { TProject } from './types';
@@ -19,15 +19,26 @@ export class ProjectsService {
     return project;
   }
 
-  findAll(filter: TProject['course']) {
-    return `This action returns all projects`;
+  async findAll(filter?: TProject['course']) {
+    const projects = await this.projectRepository.find({
+      where: { status: true },
+    });
+    if (!filter) return projects;
+    return projects.filter((projects) => projects.course === filter);
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} project`;
+  async findOne(id: string) {
+    const projects = await this.projectRepository.findOne({
+      where: { id, status: true },
+    });
+    return projects;
   }
 
-  changeStatus(id: string) {
-    return `This action removes a #${id} project`;
+  async changeStatus(id: string) {
+    const project = await this.findOne(id);
+    project.status = !project.status;
+    await this.projectRepository.save(project);
+
+    return project;
   }
 }

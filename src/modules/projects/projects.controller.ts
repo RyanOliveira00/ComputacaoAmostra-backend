@@ -1,4 +1,4 @@
-import { AuthGuard } from '@app/common';
+import { AuthGuard, SessionGuard } from '@app/common';
 import {
   Body,
   Controller,
@@ -14,6 +14,7 @@ import { ProjectsService } from './projects.service';
 import { TProject } from './types';
 
 @Controller('projects')
+@UseGuards(SessionGuard)
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
