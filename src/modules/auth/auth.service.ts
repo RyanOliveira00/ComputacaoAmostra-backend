@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import { CreateSessionDto } from './dto/create-session.dto';
+import { SessionPayload } from '../../@types/index';
 
 @Injectable()
 export class AuthService {
@@ -42,6 +43,15 @@ export class AuthService {
       return await this.jwtService.verify(session, {
         secret: configurationService.getValue('JWT_SECRET'),
       });
+    } catch (error) {
+      throw new TokenException();
+    }
+  }
+
+  async getUser(session: string) {
+    try {
+      const payload = this.jwtService.decode(session) as SessionPayload;
+      return { id: payload.id, email: payload.email };
     } catch (error) {
       throw new TokenException();
     }

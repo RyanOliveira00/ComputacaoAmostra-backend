@@ -1,5 +1,5 @@
 import { isApiKeyValid, isEmailAdmin } from '@app/common';
-import { RequestWithCustomHeader } from '@app/types';
+import { CustomRequest } from '@app/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request: RequestWithCustomHeader = context
+    const request: CustomRequest = context
       .switchToHttp()
       .getRequest();
 

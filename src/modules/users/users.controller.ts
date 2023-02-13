@@ -1,4 +1,10 @@
-import { AuthGuard, GetInCookies, Public, SessionGuard } from '@app/common';
+import {
+  AuthGuard,
+  GetInCookies,
+  GetPropInSession,
+  Public,
+  SessionGuard,
+} from '@app/common';
 import {
   Body,
   Controller,
@@ -54,9 +60,9 @@ export class UsersController {
   @Post('vote')
   async vote(
     @Query('projectId') projectId: string,
-    @GetInCookies('token') userId: string,
+    @GetPropInSession('id') userId: string,
   ) {
-    return await this.votesService.vote({
+    return await this.votesService.create({
       project_id: projectId,
       user_id: userId,
     });

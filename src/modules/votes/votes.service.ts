@@ -17,17 +17,10 @@ export class VotesService {
     await this.votesRepository.save(vote);
   }
 
-  async findAll(filter?: TProject['name']) {
+  async findAll() {
     const votes = await this.votesRepository.find({
-      relations: ['project_id'],
+      relations: ['project_id', 'user_id'],
     });
-    if (!filter) return votes;
-    return votes.filter(({ project_id }) =>
-      (project_id as TProject).name.includes(filter),
-    );
-  }
-
-  async vote(createVoteDto: CreateVoteDto) {
-    return await this.create(createVoteDto);
+    return votes;
   }
 }

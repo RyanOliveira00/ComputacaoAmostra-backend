@@ -1,4 +1,4 @@
-import { RequestWithCustomHeader } from '@app/types';
+import { CustomRequest } from '@app/types';
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
@@ -19,9 +19,10 @@ export class SessionGuard {
     ]);
 
     if (isPublic) return true;
-    const request: RequestWithCustomHeader = context
-      .switchToHttp()
-      .getRequest();
+    const request: CustomRequest = context.switchToHttp().getRequest();
+    request.user = await this.authService.getUser(
+      request.cookies['session_token'],
+    );
     return await this.authService.verifySession(
       request.cookies['session_token'],
     );

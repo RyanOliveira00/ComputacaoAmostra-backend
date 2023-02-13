@@ -1,11 +1,12 @@
 import { Request } from 'express';
 import type { IncomingHttpHeaders } from 'http';
 
-export interface RequestWithCustomHeader extends Request {
+export interface CustomRequest extends Request {
   headers: IncomingHttpHeaders & {
     email: string;
     api: string;
   };
+  user: Session;
 }
 
 export type SessionPayload = {
@@ -13,4 +14,9 @@ export type SessionPayload = {
   email: string;
   iat: number;
   exp: number;
+};
+
+export type Session = {
+  email: string;
+  id: string;
 };
