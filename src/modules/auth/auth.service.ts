@@ -4,9 +4,9 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { SessionPayload } from '../../@types/index';
 import { User } from '../users/entities/user.entity';
 import { CreateSessionDto } from './dto/create-session.dto';
-import { SessionPayload } from '../../@types/index';
 
 @Injectable()
 export class AuthService {

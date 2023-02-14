@@ -9,9 +9,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request: CustomRequest = context
-      .switchToHttp()
-      .getRequest();
+    const request: CustomRequest = context.switchToHttp().getRequest();
 
     switch (this.keyType) {
       case 'ADMIN':
