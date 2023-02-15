@@ -48,14 +48,4 @@ export class ProjectsService {
 
     return project;
   }
-
-  async getVotes(id: string) {
-    const project = await this.findOne(id);
-
-    return {
-      total: project.total_votes,
-      unique: project.unique_votes,
-      votes: project.votes,
-    };
-  }
 }
