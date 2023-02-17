@@ -1,4 +1,7 @@
-import { CourseEnum, TProject, TUser, TVote, User, Vote } from '@app/modules';
+import { User } from 'src/modules/users/entities/user.entity';
+import { TUser } from 'src/modules/users/types';
+import { Vote } from 'src/modules/votes/entities/vote.entity';
+import { TVote } from 'src/modules/votes/types';
 import {
   Column,
   Entity,
@@ -7,13 +10,14 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { CourseEnum, TProject } from '../types';
 
 @Entity({ name: 'projects' })
 export class Project implements TProject {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, { eager: true })
   @JoinColumn()
   owner_id: string | TUser;
 

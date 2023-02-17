@@ -1,8 +1,8 @@
-import { configurationService } from '@app/config';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { catchError, firstValueFrom } from 'rxjs';
+import { configurationService } from 'src/config/config.service';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -22,11 +22,11 @@ export class UsersService {
   }
 
   async findOne(where: FindOptionsWhere<User>) {
-    return await this.usersRepository.findOne({ where });
+    return await this.usersRepository.findOne({ where, relations: ['votes'] });
   }
 
   async findAll() {
-    return await this.usersRepository.find();
+    return await this.usersRepository.find({ relations: ['votes'] });
   }
 
   async validateCaptcha(captchaResponse: string) {
@@ -43,5 +43,9 @@ export class UsersService {
         ),
     );
     return data;
+  }
+
+  async save(user: User) {
+    return await this.usersRepository.save(user);
   }
 }

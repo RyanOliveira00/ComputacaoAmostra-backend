@@ -1,4 +1,3 @@
-import { AuthGuard, SessionGuard } from '@app/common';
 import {
   Body,
   Controller,
@@ -9,9 +8,10 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
+import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectsService } from './projects.service';
-import { TProject } from './types';
 
 @Controller('projects')
 @UseGuards(SessionGuard)
@@ -30,7 +30,7 @@ export class ProjectsController {
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get()
-  findAll(@Query('filter') filterType: TProject['course']) {
+  findAll(@Query('filter') filterType: string) {
     try {
       return this.projectsService.findAll(filterType);
     } catch (error) {

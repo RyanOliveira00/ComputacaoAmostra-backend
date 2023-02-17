@@ -1,8 +1,8 @@
-import { TokenException } from '@app/common';
-import { configurationService } from '@app/config';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TokenException } from 'src/common/exceptions/invalid-token';
+import { configurationService } from 'src/config/config.service';
 import { Repository } from 'typeorm';
 import { SessionPayload } from '../../@types/index';
 import { User } from '../users/entities/user.entity';
@@ -17,23 +17,25 @@ export class AuthService {
   ) {}
 
   async generateSession(sessionDto: CreateSessionDto) {
-    const sessionPayload = { ...sessionDto };
-    const user = await this.userRepository.findOne({
+    let user = await this.userRepository.findOne({
       where: { email: sessionDto.email },
     });
 
     if (!user) {
-      const newUser = this.userRepository.create({
+      user = this.userRepository.create({
         name: sessionDto.name,
         email: sessionDto.email,
       });
-      await this.userRepository.save(newUser);
+      await this.userRepository.save(user);
     }
 
-    const token = await this.jwtService.signAsync(sessionPayload, {
-      secret: configurationService.getValue('JWT_SECRET'),
-      expiresIn: configurationService.getValue('JWT_EXPIRE'),
-    });
+    const token = await this.jwtService.signAsync(
+      { ...sessionDto, sub: user.id },
+      {
+        secret: configurationService.getValue('JWT_SECRET'),
+        expiresIn: configurationService.getValue('JWT_EXPIRE'),
+      },
+    );
 
     return token;
   }
@@ -51,7 +53,7 @@ export class AuthService {
   async getUser(session: string) {
     try {
       const payload = this.jwtService.decode(session) as SessionPayload;
-      return { id: payload.id, email: payload.email };
+      return payload;
     } catch (error) {
       throw new TokenException();
     }

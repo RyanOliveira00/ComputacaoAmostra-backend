@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CalculateVotesService } from 'src/modules/votes/calculate-votes.service';
 import { Repository } from 'typeorm';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { Vote } from './entities/vote.entity';
@@ -9,11 +10,23 @@ export class VotesService {
   constructor(
     @InjectRepository(Vote)
     private readonly votesRepository: Repository<Vote>,
+    private readonly calculateVotesService: CalculateVotesService,
   ) {}
 
   async create(createVoteDto: CreateVoteDto) {
     const vote = this.votesRepository.create(createVoteDto);
+    const votes = await this.votesRepository.find();
+    const userVotes = votes.filter(
+      (vote) => vote.user_id === createVoteDto.user_id.toString(),
+    );
+    await this.calculateVotesService.addVotesProject(
+      createVoteDto.project_id,
+      userVotes.length === 0,
+    );
+    await this.calculateVotesService.addVotesUser(createVoteDto.user_id);
     await this.votesRepository.save(vote);
+
+    return vote;
   }
 
   async findAll() {

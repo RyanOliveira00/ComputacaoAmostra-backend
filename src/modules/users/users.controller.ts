@@ -1,11 +1,4 @@
 import {
-  AuthGuard,
-  GetInCookies,
-  GetPropInSession,
-  Public,
-  SessionGuard,
-} from '@app/common';
-import {
   Body,
   Controller,
   Get,
@@ -16,8 +9,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthService } from '../auth';
-import { VotesService } from '../votes';
+import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
+import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
+import { Public } from 'src/common/decorators/metadata/public.decorator';
+import { GetPropInSession } from 'src/common/params/get-prop-in-session';
+import { AuthService } from '../auth/auth.service';
+import { VotesService } from '../votes/votes.service';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -42,13 +39,11 @@ export class UsersController {
   @Public()
   @Put('generate_session')
   async generateSession(
-    @GetInCookies('userId') userId: string,
     @Query('email') email: string,
     @Query('name') name: string,
     @Res({ passthrough: true }) response: Response,
   ) {
     const token = await this.authService.generateSession({
-      id: userId,
       email,
       name,
     });
@@ -60,7 +55,7 @@ export class UsersController {
   @Post('vote')
   async vote(
     @Query('projectId') projectId: string,
-    @GetPropInSession('id') userId: string,
+    @GetPropInSession('sub') userId: string,
   ) {
     return await this.votesService.create({
       project_id: projectId,

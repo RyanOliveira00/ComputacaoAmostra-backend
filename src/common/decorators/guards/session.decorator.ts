@@ -1,7 +1,7 @@
-import { CustomRequest } from '@app/types';
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
+import { CustomRequest } from 'src/@types';
 import { AuthService } from '../../../modules/auth/auth.service';
 
 @Injectable()

@@ -10,13 +10,15 @@ export interface CustomRequest extends Request {
 }
 
 export type SessionPayload = {
-  id: string;
+  sub: string;
   email: string;
+  name: string;
   iat: number;
   exp: number;
 };
 
 export type Session = {
   email: string;
-  id: string;
+  name: string;
+  sub: string;
 };

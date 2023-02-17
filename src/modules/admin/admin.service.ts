@@ -7,6 +7,7 @@ export class AdminService {
   async downloadExcel(projectId?: string) {
     return 'This returns a downloadabl excel file';
   }
+
   async getVotes(projectId?: string) {
     if (projectId) {
       const project = await this.projectService.findOne(projectId);
@@ -14,6 +15,7 @@ export class AdminService {
         name: project.name,
         total_votes: project.total_votes,
         unique_votes: project.unique_votes,
+        votes: project.votes,
       };
     } else {
       const projects = await this.projectService.findAll();
@@ -22,6 +24,7 @@ export class AdminService {
           name: project.name,
           total_votes: project.total_votes,
           unique_votes: project.unique_votes,
+          votes: project.votes,
         };
       });
       return votes;

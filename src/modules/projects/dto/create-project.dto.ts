@@ -1,4 +1,3 @@
-import { CourseEnum, TUser } from '@app/modules';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -9,6 +8,8 @@ import {
   IsUrl,
   IsUUID,
 } from 'class-validator';
+import { TUser } from 'src/modules/users/types';
+import { CourseEnum } from '../types';
 export class CreateProjectDto {
   @IsUUID()
   owner_id: string | TUser;

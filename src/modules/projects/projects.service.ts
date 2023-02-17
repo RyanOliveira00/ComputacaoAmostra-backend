@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { Project } from './entities/project.entity';
-import { TProject } from './types';
 
 @Injectable()
 export class ProjectsService {
@@ -19,24 +18,28 @@ export class ProjectsService {
     return project;
   }
 
-  async findAll(filter?: TProject['course']) {
-    if (!Object.values({ bcc: 'bcc', ecomp: 'ecomp' }).includes(filter))
+  async findAll(filter?: string) {
+    if (
+      !Object.values({ bcc: 'bcc', ecomp: 'ecomp', all: 'all' }).includes(
+        filter,
+      )
+    )
       throw new HttpException(
         'Filter type is invalid, try BCC or ECOMP.',
         HttpStatus.BAD_REQUEST,
       );
     const projects = await this.projectRepository.find({
       where: { status: true },
-      relations: ['votes', 'owner_id'],
+      relations: ['votes'],
     });
-    if (!filter) return projects;
+    if (filter === 'all') return projects;
     return projects.filter((projects) => projects.course === filter.toString());
   }
 
   async findOne(id: string) {
     const projects = await this.projectRepository.findOne({
       where: { id, status: true },
-      relations: ['votes', 'owner_id'],
+      relations: ['votes'],
     });
     return projects;
   }
@@ -47,5 +50,9 @@ export class ProjectsService {
     await this.projectRepository.save(project);
 
     return project;
+  }
+
+  async save(project: Project) {
+    return await this.projectRepository.save(project);
   }
 }
