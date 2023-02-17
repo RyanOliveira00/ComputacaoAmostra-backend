@@ -6,13 +6,18 @@ import {
   ParseUUIDPipe,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
+import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
 import { AdminService } from './admin.service';
 
-// @UseGuards(new AuthGuard('ADMIN'), SessionGuard)
+@UseGuards(new AuthGuard('ADMIN'), SessionGuard)
 @Controller('admin')
+@ApiTags('Admin Routes')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 

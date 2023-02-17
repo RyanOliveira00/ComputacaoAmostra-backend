@@ -9,6 +9,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
@@ -17,6 +18,7 @@ import { ProjectsService } from './projects.service';
 
 @Controller('projects')
 @UseGuards(SessionGuard)
+@ApiTags('Project Routes')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 

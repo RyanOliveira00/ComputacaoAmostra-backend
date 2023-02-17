@@ -9,6 +9,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
@@ -21,6 +22,7 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 @UseGuards(new AuthGuard('CLIENT'), SessionGuard)
+@ApiTags('User Routes')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,

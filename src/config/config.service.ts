@@ -41,13 +41,17 @@ export class ConfigurationService {
         port: parseInt(this.getValue('POSTGRES_PORT'), 10),
         username: this.getValue('POSTGRES_USER'),
         password: this.getValue('POSTGRES_PASSWORD'),
-        database: this.getValue('POSTGRES_DATABASE'),
+        database: this.getValue('POSTGRES_DB'),
         migrationsTableName: 'migrations',
         autoLoadEntities: true,
         migrations: [
           join(rootDir, 'migration/*{.ts,.js}'),
           join(rootDir, 'src/migration/*{.ts,.js}'),
         ],
+        extra: {
+          ssl: this.getValue('SSL_MODE'),
+        },
+
         entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
         synchronize: true,
       }),
