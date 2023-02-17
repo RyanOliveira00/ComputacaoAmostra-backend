@@ -12,7 +12,7 @@ import { TUser } from 'src/modules/users/types';
 import { CourseEnum } from '../types';
 export class CreateProjectDto {
   @IsUUID()
-  owner_id: string | TUser;
+  ownerId: string | TUser;
 
   @IsString()
   @IsNotEmpty()

@@ -15,7 +15,7 @@ export class Vote implements TVote {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.votes)
+  @ManyToOne(() => User, (user) => user.votes, { eager: true })
   userId: string | TUser;
 
   @ManyToOne(() => Project, (project) => project.votes)

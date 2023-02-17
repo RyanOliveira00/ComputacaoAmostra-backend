@@ -5,14 +5,16 @@ import {
   Param,
   ParseUUIDPipe,
   Query,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
 import { SessionGuard } from '../../common/decorators/guards/session.decorator';
 import { AdminService } from './admin.service';
 
-@UseGuards(new AuthGuard('ADMIN'), SessionGuard)
+// @UseGuards(new AuthGuard('ADMIN'), SessionGuard)
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
@@ -21,9 +23,12 @@ export class AdminController {
   @Header('Content-Type', 'text/xlsx')
   async downloadExcel(
     @Query('filter', ParseFilterPipe) filter: string,
-    @Query('projectId', ParseUUIDPipe) projectId: string,
+    @Query('projectId') projectId: string,
+    @Res() response: Response,
   ) {
-    return this.adminService.downloadExcel({ projectId, filter });
+    return response.download(
+      (await this.adminService.downloadExcel({ projectId, filter })) as any,
+    );
   }
 
   @Get('/')

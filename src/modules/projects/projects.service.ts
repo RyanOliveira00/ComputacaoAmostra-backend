@@ -24,7 +24,7 @@ export class ProjectsService {
       relations: ['votes'],
     });
     if (filter === 'all') return projects;
-    return projects.filter((projects) => projects.course === filter.toString());
+    return projects.filter((projects) => projects.course === filter);
   }
 
   async findOne(id: string) {

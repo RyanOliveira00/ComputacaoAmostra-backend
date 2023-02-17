@@ -16,5 +16,6 @@ export class ParseFilterPipe implements PipeTransform {
         'Filter type is invalid, try BCC or ECOMP.',
         HttpStatus.BAD_REQUEST,
       );
+    return value;
   }
 }
