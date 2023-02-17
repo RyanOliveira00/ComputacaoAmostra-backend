@@ -8,7 +8,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
@@ -18,6 +18,7 @@ import { AdminService } from './admin.service';
 @UseGuards(new AuthGuard('ADMIN'), SessionGuard)
 @Controller('admin')
 @ApiTags('Admin Routes')
+@ApiHeader({ required: true, name: 'api' })
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 

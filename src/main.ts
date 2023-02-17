@@ -16,7 +16,7 @@ async function bootstrap() {
     .setTitle('Backend Computação Amostra')
     .setDescription('API Routes and data')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addCookieAuth('session_token')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

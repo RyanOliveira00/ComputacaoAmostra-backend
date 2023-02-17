@@ -9,7 +9,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
@@ -31,11 +31,15 @@ export class UsersController {
   ) {}
 
   @Get('validate_captcha')
+  @ApiCookieAuth()
+  @ApiHeader({ required: true, name: 'api' })
   validateCaptcha(@Body() body: string) {
     return this.usersService.validateCaptcha(body);
   }
 
   @Get()
+  @ApiCookieAuth()
+  @ApiHeader({ required: true, name: 'api' })
   findAll() {
     return this.usersService.findAll();
   }
@@ -57,6 +61,8 @@ export class UsersController {
   }
 
   @Post('vote')
+  @ApiCookieAuth()
+  @ApiHeader({ required: true, name: 'api' })
   async vote(
     @Query('projectId', ParseUUIDPipe) projectId: string,
     @GetPropInSession('sub', ParseUUIDPipe) userId: string,
