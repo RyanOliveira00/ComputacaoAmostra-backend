@@ -46,6 +46,7 @@ export class UsersController {
 
   @Public()
   @Put('generate_session')
+  @ApiHeader({ required: true, name: 'api' })
   async generateSession(
     @Query('email', ParseEmailPipe) email: string,
     @Query('name') name: string,
