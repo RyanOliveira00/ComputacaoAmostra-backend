@@ -6,12 +6,9 @@ import {
   ParseUUIDPipe,
   Query,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
-import { SessionGuard } from '../../common/decorators/guards/session.decorator';
 import { AdminService } from './admin.service';
 
 // @UseGuards(new AuthGuard('ADMIN'), SessionGuard)
