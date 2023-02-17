@@ -1,11 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { ExceljsService } from 'src/services/exceljs/exceljs.service';
 import { ProjectsService } from '../projects/projects.service';
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly projectService: ProjectsService) {}
-  async downloadExcel(projectId?: string) {
-    return 'This returns a downloadabl excel file';
+  constructor(
+    private readonly projectService: ProjectsService,
+    private readonly excelService: ExceljsService,
+  ) {}
+  async downloadExcel({
+    projectId,
+    filter,
+  }: {
+    projectId: string;
+    filter: string;
+  }) {
+    if (projectId) {
+      const project = await this.projectService.findOne(projectId);
+      return this.excelService.fillProjectSheet(project);
+    } else {
+      const projects = await this.projectService.findAll(filter);
+      return this.excelService.fillResultSheet(projects);
+    }
   }
 
   async getVotes(filter: string, projectId?: string) {

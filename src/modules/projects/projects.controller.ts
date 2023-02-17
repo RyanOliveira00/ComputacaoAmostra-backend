@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
+import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectsService } from './projects.service';
 
@@ -31,7 +32,7 @@ export class ProjectsController {
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get()
-  findAll(@Query('filter') filterType: string) {
+  findAll(@Query('filter', ParseFilterPipe) filterType: string) {
     try {
       return this.projectsService.findAll(filterType);
     } catch (error) {
