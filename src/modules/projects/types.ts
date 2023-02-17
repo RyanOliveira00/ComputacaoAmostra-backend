@@ -3,12 +3,12 @@ import { TVote } from '../votes/types';
 
 export type TProject = {
   id: string;
-  owner_id: TUser | TUser['id'];
+  ownerId: TUser | TUser['id'];
   name: string;
   team: string[];
   votes: TVote[] | TVote['id'][];
-  total_votes: number;
-  unique_votes: number;
+  totalVotes: number;
+  uniqueVotes: number;
   status: boolean;
   github: string;
   youtube: string;

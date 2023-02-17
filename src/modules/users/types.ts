@@ -4,7 +4,7 @@ export type TUser = {
   id: string;
   email: string;
   name: string;
-  vote_count: number;
+  voteCount: number;
   votes: string[] | TVote[];
   createdAt: Date;
 };

@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Query,
   UseGuards,
@@ -40,7 +41,7 @@ export class ProjectsController {
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     try {
       return this.projectsService.findOne(id);
     } catch (error) {
@@ -50,7 +51,7 @@ export class ProjectsController {
 
   @UseGuards(new AuthGuard('DEV'))
   @Delete('/status/:id')
-  changeStatus(@Param('id') id: string) {
+  changeStatus(@Param('id', ParseUUIDPipe) id: string) {
     try {
       return this.projectsService.changeStatus(id);
     } catch (error) {

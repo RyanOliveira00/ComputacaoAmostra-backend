@@ -18,7 +18,7 @@ export class ProjectsService {
     return project;
   }
 
-  async findAll(filter?: string) {
+  async findAll(filter: string) {
     if (
       !Object.values({ bcc: 'bcc', ecomp: 'ecomp', all: 'all' }).includes(
         filter,
@@ -39,7 +39,7 @@ export class ProjectsService {
   async findOne(id: string) {
     const projects = await this.projectRepository.findOne({
       where: { id, status: true },
-      relations: ['votes'],
+      relations: ['votes', 'votes.userId'],
     });
     return projects;
   }

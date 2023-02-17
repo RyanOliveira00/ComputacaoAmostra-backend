@@ -19,7 +19,7 @@ export class Project implements TProject {
 
   @OneToOne(() => User, { eager: true })
   @JoinColumn()
-  owner_id: string | TUser;
+  ownerId: string | TUser;
 
   @Column({ type: 'varchar' })
   name: string;
@@ -27,14 +27,14 @@ export class Project implements TProject {
   @Column({ type: 'varchar', array: true })
   team: string[];
 
-  @OneToMany(() => Vote, (vote) => vote.project_id)
+  @OneToMany(() => Vote, (vote) => vote.projectId)
   votes: string[] | TVote[];
 
   @Column({ default: 0, insert: false })
-  total_votes: number;
+  totalVotes: number;
 
   @Column({ default: 0, insert: false })
-  unique_votes: number;
+  uniqueVotes: number;
 
   @Column({ default: true })
   status: boolean;

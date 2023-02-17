@@ -8,22 +8,24 @@ export class AdminService {
     return 'This returns a downloadabl excel file';
   }
 
-  async getVotes(projectId?: string) {
+  async getVotes(filter: string, projectId?: string) {
     if (projectId) {
       const project = await this.projectService.findOne(projectId);
       return {
+        id: project.id,
         name: project.name,
-        total_votes: project.total_votes,
-        unique_votes: project.unique_votes,
+        totalVotes: project.totalVotes,
+        uniqueVotes: project.uniqueVotes,
         votes: project.votes,
       };
     } else {
-      const projects = await this.projectService.findAll();
+      const projects = await this.projectService.findAll(filter);
       const votes = projects.map((project) => {
         return {
+          id: project.id,
           name: project.name,
-          total_votes: project.total_votes,
-          unique_votes: project.unique_votes,
+          totalVotes: project.totalVotes,
+          uniqueVotes: project.uniqueVotes,
           votes: project.votes,
         };
       });

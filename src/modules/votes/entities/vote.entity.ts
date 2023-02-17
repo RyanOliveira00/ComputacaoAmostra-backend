@@ -16,10 +16,10 @@ export class Vote implements TVote {
   id: string;
 
   @ManyToOne(() => User, (user) => user.votes)
-  user_id: string | TUser;
+  userId: string | TUser;
 
   @ManyToOne(() => Project, (project) => project.votes)
-  project_id: string | TProject;
+  projectId: string | TProject;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

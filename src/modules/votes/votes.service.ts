@@ -17,13 +17,13 @@ export class VotesService {
     const vote = this.votesRepository.create(createVoteDto);
     const votes = await this.votesRepository.find();
     const userVotes = votes.filter(
-      (vote) => vote.user_id === createVoteDto.user_id.toString(),
+      (vote) => vote.userId === createVoteDto.userId.toString(),
     );
     await this.calculateVotesService.addVotesProject(
-      createVoteDto.project_id,
+      createVoteDto.projectId,
       userVotes.length === 0,
     );
-    await this.calculateVotesService.addVotesUser(createVoteDto.user_id);
+    await this.calculateVotesService.addVotesUser(createVoteDto.userId);
     await this.votesRepository.save(vote);
 
     return vote;
@@ -31,15 +31,15 @@ export class VotesService {
 
   async findAll() {
     const votes = await this.votesRepository.find({
-      relations: ['project_id', 'user_id'],
+      relations: ['projectId', 'userId'],
     });
     return votes;
   }
 
-  async findByProject(project_id: string) {
+  async findByProject(projectId: string) {
     const votes = await this.votesRepository.findOne({
-      where: { project_id },
-      relations: ['project_id', 'user_id'],
+      where: { projectId: projectId },
+      relations: ['projectId', 'userId'],
     });
     return votes;
   }

@@ -1,4 +1,11 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from '../../common/decorators/guards/session.decorator';
 import { AdminService } from './admin.service';
@@ -14,17 +21,17 @@ export class AdminController {
   }
 
   @Get('/')
-  async getAllVotes() {
-    return this.adminService.getVotes();
+  async getAllVotes(@Query('filter') filter: string) {
+    return this.adminService.getVotes(filter);
   }
 
   @Get('/download/:id')
-  async downloadExcelByProject(@Param('id') projectId: string) {
+  async downloadExcelByProject(@Param('id', ParseUUIDPipe) projectId: string) {
     return this.adminService.downloadExcel(projectId);
   }
 
   @Get('/:id')
-  async getVotesByProject(@Param('id') projectId: string) {
-    return this.adminService.getVotes(projectId);
+  async getVotesByProject(@Param('id', ParseUUIDPipe) projectId: string) {
+    return this.adminService.getVotes('all', projectId);
   }
 }

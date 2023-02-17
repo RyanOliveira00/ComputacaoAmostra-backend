@@ -21,9 +21,9 @@ export class User implements TUser {
   name: string;
 
   @Column({ default: 0, insert: false })
-  vote_count: number;
+  voteCount: number;
 
-  @OneToMany(() => Vote, (vote) => vote.user_id)
+  @OneToMany(() => Vote, (vote) => vote.userId)
   votes: string[] | TVote[];
 
   @CreateDateColumn({ type: 'timestamp' })

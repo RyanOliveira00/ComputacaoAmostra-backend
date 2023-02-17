@@ -2,7 +2,7 @@ import { IsUUID } from 'class-validator';
 
 export class CreateVoteDto {
   @IsUUID()
-  user_id: string;
+  userId: string;
   @IsUUID()
-  project_id: string;
+  projectId: string;
 }

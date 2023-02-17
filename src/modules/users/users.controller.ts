@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  ParseUUIDPipe,
   Post,
   Put,
   Query,
@@ -13,6 +14,7 @@ import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { Public } from 'src/common/decorators/metadata/public.decorator';
 import { GetPropInSession } from 'src/common/params/get-prop-in-session';
+import { ParseEmailPipe } from '../../common/pipes/parse-email.pipe';
 import { AuthService } from '../auth/auth.service';
 import { VotesService } from '../votes/votes.service';
 import { UsersService } from './users.service';
@@ -39,7 +41,7 @@ export class UsersController {
   @Public()
   @Put('generate_session')
   async generateSession(
-    @Query('email') email: string,
+    @Query('email', ParseEmailPipe) email: string,
     @Query('name') name: string,
     @Res({ passthrough: true }) response: Response,
   ) {
@@ -54,12 +56,12 @@ export class UsersController {
 
   @Post('vote')
   async vote(
-    @Query('projectId') projectId: string,
-    @GetPropInSession('sub') userId: string,
+    @Query('projectId', ParseUUIDPipe) projectId: string,
+    @GetPropInSession('sub', ParseUUIDPipe) userId: string,
   ) {
     return await this.votesService.create({
-      project_id: projectId,
-      user_id: userId,
+      projectId,
+      userId,
     });
   }
 }

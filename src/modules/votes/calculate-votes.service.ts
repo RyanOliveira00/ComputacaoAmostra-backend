@@ -13,30 +13,30 @@ export class CalculateVotesService {
     private readonly projectsRepository: Repository<Project>,
   ) {}
 
-  async addVotesUser(user_id: string) {
+  async addVotesUser(userId: string) {
     const user = await this.usersRepository.findOne({
       where: {
-        id: user_id,
+        id: userId,
       },
     });
     if (!user)
       throw new HttpException('User not found.', HttpStatus.BAD_REQUEST);
-    user.vote_count += 1;
+    user.voteCount += 1;
     await this.usersRepository.save(user);
     return;
   }
-  async addVotesProject(project_id: string, unique: boolean) {
+  async addVotesProject(projectId: string, unique: boolean) {
     const project = await this.projectsRepository.findOne({
       where: {
-        id: project_id,
+        id: projectId,
       },
     });
     if (!project)
       throw new HttpException('project not found.', HttpStatus.BAD_REQUEST);
     if (unique) {
-      project.unique_votes += 1;
+      project.uniqueVotes += 1;
     }
-    project.total_votes += 1;
+    project.totalVotes += 1;
     await this.projectsRepository.save(project);
     return;
   }
