@@ -37,10 +37,10 @@ export class UsersController {
     return this.usersService.validateCaptcha(body);
   }
 
-  @Get()
+  @Get('/leaderboard')
   @ApiCookieAuth()
   @ApiHeader({ required: true, name: 'api' })
-  findAll() {
+  getLeaderboard() {
     return this.usersService.findAll();
   }
 

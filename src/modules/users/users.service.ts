@@ -26,7 +26,11 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.usersRepository.find({ relations: ['votes'] });
+    const users = await this.usersRepository.find({
+      relations: ['votes', 'votes.projectId'],
+      select: { votes: { createdAt: true, projectId: true } },
+    });
+    return users.sort((a, b) => a.voteCount - b.voteCount).reverse();
   }
 
   async validateCaptcha(captchaResponse: string) {
