@@ -3,7 +3,6 @@ import { TVote } from '../votes/types';
 
 export type TProject = {
   id: string;
-  ownerId: TUser | TUser['id'];
   name: string;
   team: string[];
   votes: TVote[] | TVote['id'][];

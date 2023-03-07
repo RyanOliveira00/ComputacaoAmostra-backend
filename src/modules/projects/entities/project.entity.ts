@@ -17,10 +17,6 @@ export class Project implements TProject {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User, { eager: true })
-  @JoinColumn()
-  ownerId: string | TUser;
-
   @Column({ type: 'varchar' })
   name: string;
 

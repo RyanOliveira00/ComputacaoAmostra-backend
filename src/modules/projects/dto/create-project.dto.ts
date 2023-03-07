@@ -7,15 +7,9 @@ import {
   IsNotEmpty,
   IsString,
   IsUrl,
-  IsUUID,
 } from 'class-validator';
-import { TUser } from 'src/modules/users/types';
 import { CourseEnum } from '../types';
 export class CreateProjectDto {
-  @IsUUID()
-  @ApiProperty()
-  ownerId: string | TUser;
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty()

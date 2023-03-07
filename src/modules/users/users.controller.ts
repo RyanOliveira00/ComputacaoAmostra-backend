@@ -9,7 +9,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiCookieAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiExtraModels, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
@@ -17,7 +17,9 @@ import { Public } from 'src/common/decorators/metadata/public.decorator';
 import { GetPropInSession } from 'src/common/params/get-prop-in-session';
 import { ParseEmailPipe } from '../../common/pipes/parse-email.pipe';
 import { AuthService } from '../auth/auth.service';
+import { CreateVoteDto } from '../votes/dto/create-vote.dto';
 import { VotesService } from '../votes/votes.service';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -47,6 +49,7 @@ export class UsersController {
   @Public()
   @Put('generate_session')
   @ApiHeader({ required: true, name: 'api' })
+  @ApiExtraModels(CreateUserDto)
   async generateSession(
     @Query('email', ParseEmailPipe) email: string,
     @Query('name') name: string,
@@ -64,6 +67,7 @@ export class UsersController {
   @Post('vote')
   @ApiCookieAuth()
   @ApiHeader({ required: true, name: 'api' })
+  @ApiExtraModels(CreateVoteDto)
   async vote(
     @Query('projectId', ParseUUIDPipe) projectId: string,
     @GetPropInSession('sub', ParseUUIDPipe) userId: string,
