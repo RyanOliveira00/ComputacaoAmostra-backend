@@ -2,10 +2,10 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { catchError, firstValueFrom } from 'rxjs';
-import { configurationService } from './config/config.service';
+import { configurationService } from '../../config/config.service';
 import { FindOptionsWhere, Repository } from 'typeorm';
-import { CreateUserDto } from './modules/users/dto/create-user.dto';
-import { User } from './modules/users/entities/user.entity';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class UsersService {
