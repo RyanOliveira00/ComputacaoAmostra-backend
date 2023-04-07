@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { CustomRequest } from 'src/@types';
-import { isEmailAdmin } from 'src/common/validators/is-admin-email';
-import { isApiKeyValid } from 'src/common/validators/is-api-key-valid';
+import { CustomRequest } from '../../../@types';
+import { isEmailAdmin } from '../../validators/is-admin-email';
+import { isApiKeyValid } from '../../validators/is-api-key-valid';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

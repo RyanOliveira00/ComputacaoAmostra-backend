@@ -8,7 +8,7 @@ import {
   IsString,
   IsUrl,
 } from 'class-validator';
-import { CourseEnum } from 'src/modules/projects/types';
+import { CourseEnum } from '../types';
 export class CreateProjectDto {
   @IsString()
   @IsNotEmpty()

@@ -4,10 +4,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Project } from 'src/modules/projects/entities/project.entity';
-import { TProject } from 'src/modules/projects/types';
-import { User } from 'src/modules/users/entities/user.entity';
-import { TUser } from 'src/modules/users/types';
+import { Project } from '../../projects/entities/project.entity';
+import { TProject } from '../../projects/types';
+import { User } from '../../users/entities/user.entity';
+import { TUser } from '../../users/types';
 import { TVote } from '../types';
 
 @Entity({ name: 'votes' })

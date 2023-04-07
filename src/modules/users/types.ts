@@ -1,4 +1,4 @@
-import { TVote } from 'src/modules/votes/types';
+import { TVote } from '../votes/types';
 
 export type TUser = {
   id: string;

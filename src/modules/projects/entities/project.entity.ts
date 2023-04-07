@@ -1,12 +1,12 @@
-import { Vote } from 'src/modules/votes/entities/vote.entity';
-import { TVote } from 'src/modules/votes/types';
+import { Vote } from '../../votes/entities/vote.entity';
+import { TVote } from '../../votes/types';
 import {
   Column,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CourseEnum, TProject } from 'src/modules/projects/types';
+import { CourseEnum, TProject } from '../types';
 
 @Entity({ name: 'projects' })
 export class Project implements TProject {

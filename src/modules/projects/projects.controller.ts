@@ -10,11 +10,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiHeader, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
-import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
-import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
-import { CreateProjectDto } from 'src/modules/projects/dto/create-project.dto';
-import { ProjectsService } from 'src/modules/projects/projects.service';
+import { AuthGuard } from '../../common/decorators/guards/auth.decorator';
+import { SessionGuard } from '../../common/decorators/guards/session.decorator';
+import { ParseFilterPipe } from '../../common/pipes/parse-filter.pipe';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { ProjectsService } from './projects.service';
 
 @Controller('projects')
 @UseGuards(SessionGuard)

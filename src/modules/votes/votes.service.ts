@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CalculateVotesService } from 'src/modules/votes/calculate-votes.service';
+import { CalculateVotesService } from './calculate-votes.service';
 import { Repository } from 'typeorm';
-import { CreateVoteDto } from 'src/modules/votes/dto/create-vote.dto';
-import { Vote } from 'src/modules/votes/entities/vote.entity';
+import { CreateVoteDto } from './dto/create-vote.dto';
+import { Vote } from './entities/vote.entity';
 
 @Injectable()
 export class VotesService {

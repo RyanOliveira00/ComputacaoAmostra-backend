@@ -46,7 +46,7 @@ export class ConfigurationService {
         autoLoadEntities: true,
         migrations: [
           join(rootDir, 'migration/*{.ts,.js}'),
-          join(rootDir, 'src/migration/*{.ts,.js}'),
+          join(rootDir, './migration/*{.ts,.js}'),
         ],
         extra: {
           ssl: this.getValue('SSL_MODE'),

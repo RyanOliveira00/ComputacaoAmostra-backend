@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TokenException } from 'src/common/exceptions/invalid-token';
-import { configurationService } from 'src/config/config.service';
+import { TokenException } from '../../common/exceptions/invalid-token';
+import { configurationService } from '../../config/config.service';
 import { Repository } from 'typeorm';
-import { SessionPayload } from 'src/@types/index';
-import { User } from 'src/modules/users/entities/user.entity';
-import { CreateSessionDto } from 'src/modules/auth/dto/create-session.dto';
+import { SessionPayload } from '../../@types';
+import { User } from '../users/entities/user.entity';
+import { CreateSessionDto } from './dto/create-session.dto';
 
 @Injectable()
 export class AuthService {

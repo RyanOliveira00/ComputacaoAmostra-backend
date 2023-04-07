@@ -1,5 +1,5 @@
-import { Vote } from 'src/modules/votes/entities/vote.entity';
-import { TVote } from 'src/modules/votes/types';
+import { Vote } from '../../votes/entities/vote.entity';
+import { TVote } from '../../votes/types';
 import {
   Column,
   CreateDateColumn,

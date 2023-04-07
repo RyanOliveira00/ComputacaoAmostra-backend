@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Project } from 'src/modules/projects/entities/project.entity';
-import { User } from 'src/modules/users/entities/user.entity';
+import { Project } from '../projects/entities/project.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class CalculateVotesService {

@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
+import { AuthGuard } from './common/decorators/guards/auth.decorator';
 
 @Controller('/health')
 @ApiTags('Health Check')
