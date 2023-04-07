@@ -11,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
-  app.use(cookieParser);
+  app.use(cookieParser());
   const config = new DocumentBuilder()
     .setTitle('Backend Computação Amostra')
     .setDescription('API Routes and data')
