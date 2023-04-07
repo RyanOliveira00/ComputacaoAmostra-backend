@@ -15,12 +15,12 @@ import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { Public } from 'src/common/decorators/metadata/public.decorator';
 import { GetPropInSession } from 'src/common/params/get-prop-in-session';
-import { ParseEmailPipe } from '../../common/pipes/parse-email.pipe';
-import { AuthService } from '../auth/auth.service';
-import { CreateVoteDto } from '../votes/dto/create-vote.dto';
-import { VotesService } from '../votes/votes.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UsersService } from './users.service';
+import { ParseEmailPipe } from 'src/common/pipes/parse-email.pipe';
+import { AuthService } from 'src/modules/auth/auth.service';
+import { CreateVoteDto } from 'src/modules/votes/dto/create-vote.dto';
+import { VotesService } from 'src/modules/votes/votes.service';
+import { CreateUserDto } from 'src/modules/users/dto/create-user.dto';
+import { UsersService } from 'src/modules/users/users.service';
 
 @Controller('users')
 @UseGuards(new AuthGuard('CLIENT'), SessionGuard)

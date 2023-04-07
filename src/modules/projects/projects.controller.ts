@@ -13,8 +13,8 @@ import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { ProjectsService } from './projects.service';
+import { CreateProjectDto } from 'src/modules/projects/dto/create-project.dto';
+import { ProjectsService } from 'src/modules/projects/projects.service';
 
 @Controller('projects')
 @UseGuards(SessionGuard)

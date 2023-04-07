@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import type { CustomRequest } from '../../@types/index';
+import type { CustomRequest } from 'src/@types/index';
 
 export const GetInCookies = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {

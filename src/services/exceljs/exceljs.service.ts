@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Workbook, Worksheet } from 'exceljs';
 import { TVote } from 'src/modules/votes/types';
 import * as tmp from 'tmp';
-import { Project } from '../../modules/projects/entities/project.entity';
-import { TUser } from '../../modules/users/types';
+import { Project } from 'src/modules/projects/entities/project.entity';
+import { TUser } from 'src/modules/users/types';
 
 @Injectable()
 export class ExceljsService {

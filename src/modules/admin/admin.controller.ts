@@ -13,7 +13,7 @@ import { Response } from 'express';
 import { AuthGuard } from 'src/common/decorators/guards/auth.decorator';
 import { SessionGuard } from 'src/common/decorators/guards/session.decorator';
 import { ParseFilterPipe } from 'src/common/pipes/parse-filter.pipe';
-import { AdminService } from './admin.service';
+import { AdminService } from 'src/modules/admin/admin.service';
 
 @UseGuards(new AuthGuard('ADMIN'), SessionGuard)
 @Controller('admin')

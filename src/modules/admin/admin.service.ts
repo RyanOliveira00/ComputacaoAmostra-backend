@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ExceljsService } from 'src/services/exceljs/exceljs.service';
-import { ProjectsService } from '../projects/projects.service';
+import { ProjectsService } from 'src/modules/projects/projects.service';
 
 @Injectable()
 export class AdminService {

@@ -2,8 +2,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
-import { AppModule } from './app.module';
-import { configurationService } from './config/config.service';
+import { AppModule } from 'src/app.module';
+import { configurationService } from 'src/config/config.service';
 
 const PORT = configurationService.getValue('PORT');
 

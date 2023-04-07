@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import type { CustomRequest } from '../../@types/index';
-import { Session } from '../../@types/index';
+import type { CustomRequest } from 'src/@types/index';
+import { Session } from 'src/@types/index';
 
 export const GetPropInSession = createParamDecorator(
   (data: keyof Session, ctx: ExecutionContext) => {
