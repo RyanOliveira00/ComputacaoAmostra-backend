@@ -15,7 +15,6 @@ import { AuthGuard } from '../../common/decorators/guards/auth.decorator';
 import { SessionGuard } from '../../common/decorators/guards/session.decorator';
 import { Public } from '../../common/decorators/metadata/public.decorator';
 import { GetPropInSession } from '../../common/params/get-prop-in-session';
-import { ParseEmailPipe } from '../../common/pipes/parse-email.pipe';
 import { AuthService } from '../auth/auth.service';
 import { CreateVoteDto } from '../votes/dto/create-vote.dto';
 import { VotesService } from '../votes/votes.service';
@@ -44,16 +43,18 @@ export class UsersController {
   @ApiHeader({ required: true, name: 'api' })
   @ApiExtraModels(CreateUserDto)
   async generateSession(
-    @Query('email', ParseEmailPipe) email: string,
+    @Query('email') email: string,
     @Query('name') name: string,
     @Res({ passthrough: true }) response: Response,
   ) {
+    console.log(email, name);
+    
     const token = await this.authService.generateSession({
       email,
       name,
     });
     response.cookie('session_token', token);
-
+    console.log(response.cookie)
     return { status: 'Generated' };
   }
 
