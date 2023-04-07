@@ -10,9 +10,15 @@ import { configurationService } from './config/config.service';
 import { AdminModule } from './modules/admin/admin.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { UsersModule } from './modules/users/users.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: '/swagger',
+    }),
     ConfigModule.forRoot(),
     ThrottlerModule.forRootAsync(configurationService.getThrottleConfig()),
     TypeOrmModule.forRootAsync(

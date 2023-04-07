@@ -39,13 +39,6 @@ export class UsersController {
     return this.usersService.validateCaptcha(body);
   }
 
-  @Get('/leaderboard')
-  @ApiCookieAuth()
-  @ApiHeader({ required: true, name: 'api' })
-  getLeaderboard() {
-    return this.usersService.findAll();
-  }
-
   @Public()
   @Put('generate_session')
   @ApiHeader({ required: true, name: 'api' })
