@@ -15,7 +15,11 @@ export class VotesService {
 
   async create(createVoteDto: CreateVoteDto) {
     const vote = this.votesRepository.create(createVoteDto);
-    const votes = await this.votesRepository.find();
+    const votes = await this.votesRepository.find({
+      where: {
+        projectId: createVoteDto.projectId
+      }
+    });
     const userVotes = votes.filter(
       (vote) => vote.userId === createVoteDto.userId.toString(),
     );
