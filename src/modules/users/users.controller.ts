@@ -47,14 +47,11 @@ export class UsersController {
     @Query('name') name: string,
     @Res({ passthrough: true }) response: Response,
   ) {
-    console.log(email, name);
-    
     const token = await this.authService.generateSession({
       email,
       name,
     });
     response.cookie('session_token', token);
-    console.log(response.cookie)
     return { status: 'Generated' };
   }
 

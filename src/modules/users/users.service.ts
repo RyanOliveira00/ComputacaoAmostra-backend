@@ -17,8 +17,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const user = this.usersRepository.create(createUserDto);
-    await this.usersRepository.save(user);
-    return user;
+    return this.usersRepository.save(user);
   }
 
   async findOne(where: FindOptionsWhere<User>) {
@@ -47,9 +46,5 @@ export class UsersService {
         ),
     );
     return data;
-  }
-
-  async save(user: User) {
-    return await this.usersRepository.save(user);
   }
 }

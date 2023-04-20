@@ -28,4 +28,5 @@ export class User implements TUser {
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
+
 }
