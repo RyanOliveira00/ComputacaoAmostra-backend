@@ -23,7 +23,6 @@ export class ProjectsService {
       where: { status: true },
       relations: ['votes'],
     });
-    if (filter === 'all') return projects;
     return projects.filter((projects) => projects.course === filter);
   }
 
