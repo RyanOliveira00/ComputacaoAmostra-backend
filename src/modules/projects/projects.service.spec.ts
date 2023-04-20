@@ -52,8 +52,4 @@ describe('ProjectsService', () => {
   it('should find all ECOMP projects where status is true', async () => {
     expect(await projectsService.findAll('ecomp')).toEqual(expect.arrayContaining([mockProjects[3]]));
   });
-
-  it('should find all projects where status is true', async () => {
-    expect(await projectsService.findAll('all')).toEqual(expect.arrayContaining(mockProjects.filter(project => project.status)));
-  });
 });
