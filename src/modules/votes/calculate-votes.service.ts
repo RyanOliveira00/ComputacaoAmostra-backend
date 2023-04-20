@@ -29,6 +29,7 @@ export class CalculateVotesService {
     const project = await this.projectsRepository.findOne({
       where: {
         id: projectId,
+        status: true
       },
     });
     if (!project)
