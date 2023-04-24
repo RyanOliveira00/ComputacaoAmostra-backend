@@ -4,9 +4,9 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { HttpModule } from '@nestjs/axios';
 import { mockUsers } from '../../../test/utils/mocks/users';
-import { mockUsersRepository } from '../../../test/utils/mocks/users.repository';
+import { mockUsersRepository } from '../../../test/utils/mocks/users/users.repository';
 
-describe('UsersService', () => {
+describe('Unit Tests: UsersService', () => {
   let usersService: UsersService;
 
   beforeEach(async () => {

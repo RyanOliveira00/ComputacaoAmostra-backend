@@ -2,11 +2,11 @@ import { Test } from '@nestjs/testing';
 import { ProjectsService } from './projects.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
-import { mockProjectsRepository } from '../../../test/utils/mocks/projects.repository';
+import { mockProjectsRepository } from '../../../test/utils/mocks/projects/projects.repository';
 import { mockProjects } from '../../../test/utils/mocks/projects';
 import { CreateProjectDto } from './dto/create-project.dto';
 
-describe('ProjectsService', () => {
+describe('Unit Tests: ProjectsService', () => {
   let projectsService: ProjectsService;
 
   beforeEach(async () => {

@@ -4,7 +4,7 @@ import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { configurationService } from '../src/config/config.service';
 
-describe('AppController (e2e)', () => {
+describe('Unit Tests: AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
