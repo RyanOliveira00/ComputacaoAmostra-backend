@@ -17,7 +17,6 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectsService } from './projects.service';
 
 @Controller('projects')
-@UseGuards(SessionGuard)
 @ApiTags('Project Routes')
 @ApiHeader({ required: true, name: 'api' })
 export class ProjectsController {
@@ -54,6 +53,7 @@ export class ProjectsController {
   }
 
   @UseGuards(new AuthGuard('DEV'))
+  @UseGuards(SessionGuard)
   @Delete('/status/:id')
   changeStatus(@Param('id', ParseUUIDPipe) id: string) {
     try {
