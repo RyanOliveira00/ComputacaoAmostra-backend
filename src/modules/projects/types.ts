@@ -4,12 +4,18 @@ export type TProject = {
   id: string;
   name: string;
   team: string[];
+  description: string;
   votes: TVote[] | TVote['id'][];
   totalVotes: number;
   uniqueVotes: number;
   status: boolean;
-  github: string;
-  youtube: string;
+  links: {
+    github: string;
+    youtube: {
+      en: string;
+      pt: string;
+    }
+  }
   course: CourseEnum;
 };
 

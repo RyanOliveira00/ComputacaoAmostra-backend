@@ -16,6 +16,9 @@ export class Project implements TProject {
   @Column({ type: 'varchar' })
   name: string;
 
+  @Column({ type: 'varchar' })
+  description: string;
+
   @Column({ type: 'varchar', array: true })
   team: string[];
 
@@ -31,12 +34,14 @@ export class Project implements TProject {
   @Column({ default: true })
   status: boolean;
 
-  @Column({ type: 'varchar' })
-  github: string;
-
-  @Column({ type: 'varchar' })
-  youtube: string;
-
+  @Column({ type: 'json' })
+  links: { 
+    github: string;
+    youtube: {
+      en: string;
+      pt: string;
+    };
+  };
   @Column({ type: 'varchar', enum: ['bcc', 'ecomp'] })
   course: CourseEnum;
 }
