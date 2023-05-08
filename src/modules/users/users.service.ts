@@ -32,7 +32,7 @@ export class UsersService {
     return users.sort((a, b) => a.voteCount - b.voteCount).reverse();
   }
 
-  async validateCaptcha(captchaResponse: string) {
+  async validateCaptcha(captchaResponse: string): Promise<{ success?: string, error?: string }> {
     const { data } = await firstValueFrom(
       this.httpService
         .post('https://www.google.com/recaptcha/api/siteverify', {

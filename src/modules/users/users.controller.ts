@@ -7,6 +7,7 @@ import {
   Put,
   Query,
   Res,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiCookieAuth, ApiExtraModels, ApiHeader, ApiTags } from '@nestjs/swagger';
@@ -20,6 +21,7 @@ import { CreateVoteDto } from '../votes/dto/create-vote.dto';
 import { VotesService } from '../votes/votes.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
+import { validate } from 'class-validator';
 
 @Controller('users')
 @UseGuards(new AuthGuard('CLIENT'), SessionGuard)
@@ -62,10 +64,15 @@ export class UsersController {
   async vote(
     @Query('projectId', ParseUUIDPipe) projectId: string,
     @GetPropInSession('sub', ParseUUIDPipe) userId: string,
+    @Body() { captcha }: { captcha: string }
   ) {
-    return await this.votesService.create({
-      projectId,
-      userId,
-    });
+    if((await this.usersService.validateCaptcha(captcha)).success){
+      return await this.votesService.create({
+        projectId,
+        userId,
+      });
+    } else {
+      throw new UnauthorizedException('Invalid captcha')
+    }
   }
 }
