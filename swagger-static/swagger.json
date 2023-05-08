@@ -401,10 +401,47 @@
           "projectId"
         ]
       },
+      "MultilanguageVideoDto": {
+        "type": "object",
+        "properties": {
+          "en": {
+            "type": "string"
+          },
+          "pt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "en",
+          "pt"
+        ]
+      },
+      "LinksDto": {
+        "type": "object",
+        "properties": {
+          "github": {
+            "type": "string"
+          },
+          "youtube": {
+            "$ref": "#/components/schemas/MultilanguageVideoDto"
+          },
+          "banner": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "github",
+          "youtube",
+          "banner"
+        ]
+      },
       "CreateProjectDto": {
         "type": "object",
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           },
           "team": {
@@ -413,11 +450,8 @@
               "type": "string"
             }
           },
-          "github": {
-            "type": "string"
-          },
-          "youtube": {
-            "type": "string"
+          "links": {
+            "$ref": "#/components/schemas/LinksDto"
           },
           "course": {
             "type": "string"
@@ -425,9 +459,9 @@
         },
         "required": [
           "name",
+          "description",
           "team",
-          "github",
-          "youtube",
+          "links",
           "course"
         ]
       }
