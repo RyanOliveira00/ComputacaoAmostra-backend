@@ -13,6 +13,29 @@ import {
 import { CourseEnum } from '../types';
 import { Type } from 'class-transformer';
 
+class MultilanguageVideoDto {
+  @IsString()
+  @IsUrl()
+  @ApiProperty()
+  en: string;
+
+  @IsString()
+  @IsUrl()
+  @ApiProperty()
+  pt: string;
+}
+
+class LinksDto {
+  @IsUrl()
+  @ApiProperty()
+  github: string;
+
+  @ValidateNested({ each: true })
+  @Type(() => MultilanguageVideoDto)
+  @ApiProperty()
+  youtube: MultilanguageVideoDto;
+}
+
 export class CreateProjectDto {
   @IsString()
   @IsNotEmpty()
@@ -39,27 +62,4 @@ export class CreateProjectDto {
   @IsEnum({ BCC: 'bcc', ECOMP: 'ecomp' })
   @ApiProperty()
   course: CourseEnum;
-}
-
-class LinksDto {
-  @IsUrl()
-  @ApiProperty()
-  github: string;
-
-  @ValidateNested({ each: true })
-  @Type(() => MultilanguageVideoDto)
-  @ApiProperty()
-  youtube: MultilanguageVideoDto;
-}
-
-class MultilanguageVideoDto {
-  @IsString()
-  @IsUrl()
-  @ApiProperty()
-  en: string;
-
-  @IsString()
-  @IsUrl()
-  @ApiProperty()
-  pt: string;
 }
