@@ -41,6 +41,7 @@ export class Project implements TProject {
       en: string;
       pt: string;
     };
+    banner?: string;
   };
   @Column({ type: 'varchar', enum: ['bcc', 'ecomp'] })
   course: CourseEnum;

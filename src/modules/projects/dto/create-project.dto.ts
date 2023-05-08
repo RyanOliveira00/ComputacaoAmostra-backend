@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsObject,
+  IsOptional,
   IsString,
   IsUrl,
   ValidateNested,
@@ -34,6 +35,11 @@ class LinksDto {
   @Type(() => MultilanguageVideoDto)
   @ApiProperty()
   youtube: MultilanguageVideoDto;
+  
+  @IsOptional()
+  @IsUrl()
+  @ApiProperty()
+  banner: string;
 }
 
 export class CreateProjectDto {
