@@ -23,7 +23,7 @@ export class ProjectsService {
       where: { status: true },
       relations: ['votes'],
     });
-    return projects.filter((projects) => projects.course === filter);
+    return filter === 'all' ? projects : projects.filter((projects) => projects.course === filter);
   }
 
   async findOne(id: string) {
