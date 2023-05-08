@@ -15,6 +15,7 @@ export type TProject = {
       en: string;
       pt: string;
     }
+    banner?: string;
   }
   course: CourseEnum;
 };
