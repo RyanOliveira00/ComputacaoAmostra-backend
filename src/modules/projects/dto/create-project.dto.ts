@@ -16,12 +16,10 @@ import { Type } from 'class-transformer';
 
 class MultilanguageVideoDto {
   @IsString()
-  @IsUrl()
   @ApiProperty()
   en: string;
 
   @IsString()
-  @IsUrl()
   @ApiProperty()
   pt: string;
 }
