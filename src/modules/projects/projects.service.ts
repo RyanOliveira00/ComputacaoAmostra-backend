@@ -26,9 +26,9 @@ export class ProjectsService {
     return filter === 'all' ? projects : projects.filter((projects) => projects.course === filter);
   }
 
-  async findOne(id: string) {
+  async findOne(name: string) {
     const projects = await this.projectRepository.findOne({
-      where: { id, status: true },
+      where: { name, status: true },
       relations: ['votes', 'votes.userId'],
     });
     return projects;
