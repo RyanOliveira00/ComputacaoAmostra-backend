@@ -43,10 +43,10 @@ export class ProjectsController {
   }
 
   @UseGuards(new AuthGuard('CLIENT'))
-  @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
+  @Get(':name')
+  findOne(@Param('name') name: string) {
     try {
-      return this.projectsService.findOne(id);
+      return this.projectsService.findOne(name);
     } catch (error) {
       return { error };
     }
