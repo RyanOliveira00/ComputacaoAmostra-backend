@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -12,26 +12,40 @@ export class ProjectsService {
   ) {}
 
   async create(createProjectDto: CreateProjectDto) {
-    const project = this.projectRepository.create(createProjectDto);
-    await this.projectRepository.save(project);
+    try {
+      const project = this.projectRepository.create(createProjectDto);
+      await this.projectRepository.save(project);
 
-    return project;
+      return project;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   async findAll(filter: string) {
-    const projects = await this.projectRepository.find({
-      where: { status: true },
-      relations: ['votes'],
-    });
-    return filter === 'all' ? projects : projects.filter((projects) => projects.course === filter);
+    try {
+      const projects = await this.projectRepository.find({
+        where: { status: true },
+        relations: ['votes'],
+      });
+      return filter === 'all' ? projects : projects.filter((projects) => projects.course === filter);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   async findOne(name: string) {
-    const projects = await this.projectRepository.findOne({
-      where: { name, status: true },
+    const projects = await this.projectRepository.find({
+      where: { status: true },
       relations: ['votes', 'votes.userId'],
     });
-    return projects;
+    return projects.find(project => 
+      project.name
+        .normalize("NFD")
+        .replace(/[^a-zA-Z\s]/g, "")
+        .replace(/\s+/g, "-")
+        .toLowerCase() === name
+      );
   }
 
   async changeStatus(id: string) {
