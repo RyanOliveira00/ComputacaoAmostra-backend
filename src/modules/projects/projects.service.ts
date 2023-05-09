@@ -39,6 +39,7 @@ export class ProjectsService {
       where: { status: true },
       relations: ['votes', 'votes.userId'],
     });
+    
     return projects.find(project => 
       project.name
         .normalize("NFD")

@@ -34,9 +34,14 @@ export class ProjectsController {
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get()
-  findAll(@Query('filter', ParseFilterPipe) filterType: string) {
+  async findAll(@Query('filter', ParseFilterPipe) filterType: string) {
     try {
-      return this.projectsService.findAll(filterType);
+      const projects = await this.projectsService.findAll(filterType);
+      projects.forEach(project => {
+        delete project.totalVotes
+        delete project.uniqueVotes
+      })
+      return projects
     } catch (error) {
       return { error };
     }
@@ -44,9 +49,13 @@ export class ProjectsController {
 
   @UseGuards(new AuthGuard('CLIENT'))
   @Get(':name')
-  findOne(@Param('name') name: string) {
+  async findOne(@Param('name') name: string) {
     try {
-      return this.projectsService.findOne(name);
+      const project = await this.projectsService.findOne(name);
+      delete project.totalVotes
+      delete project.uniqueVotes
+
+      return project
     } catch (error) {
       return { error };
     }
