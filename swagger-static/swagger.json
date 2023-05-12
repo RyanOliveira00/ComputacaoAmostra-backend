@@ -190,7 +190,7 @@
         ]
       }
     },
-    "/projects/{id}": {
+    "/projects/{name}": {
       "get": {
         "operationId": "ProjectsController_findOne",
         "parameters": [
@@ -203,7 +203,7 @@
             }
           },
           {
-            "name": "id",
+            "name": "name",
             "required": true,
             "in": "path",
             "schema": {
