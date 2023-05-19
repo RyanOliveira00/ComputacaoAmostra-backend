@@ -62,7 +62,7 @@ export class UsersController {
   @ApiHeader({ required: true, name: 'api' })
   @ApiExtraModels(CreateVoteDto)
   async vote(
-    @Query('projectId', ParseUUIDPipe) projectId: string,
+    @Query('projectId') projectId: string,
     @GetPropInSession('sub', ParseUUIDPipe) userId: string,
     @Body() { captcha }: { captcha: string }
   ) {
