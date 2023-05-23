@@ -10,7 +10,7 @@ export type TProject = {
   uniqueVotes: number;
   status: boolean;
   links: {
-    github: string;
+    github?: string;
     youtube: {
       en: string;
       pt: string;

@@ -36,7 +36,7 @@ export class Project implements TProject {
 
   @Column({ type: 'json' })
   links: { 
-    github: string;
+    github?: string;
     youtube: {
       en: string;
       pt: string;

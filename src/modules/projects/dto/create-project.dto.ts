@@ -25,9 +25,10 @@ class MultilanguageVideoDto {
 }
 
 class LinksDto {
+  @IsOptional()
   @IsUrl()
   @ApiProperty()
-  github: string;
+  github?: string;
 
   @ValidateNested({ each: true })
   @Type(() => MultilanguageVideoDto)
@@ -37,7 +38,7 @@ class LinksDto {
   @IsOptional()
   @IsUrl()
   @ApiProperty()
-  banner: string;
+  banner?: string;
 }
 
 export class CreateProjectDto {
