@@ -1,6 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
@@ -12,6 +12,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { UsersModule } from './modules/users/users.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
 
 @Module({
   imports: [
@@ -20,6 +21,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       serveRoot: '/',
     }),
     ConfigModule.forRoot(),
+    GoogleRecaptchaModule.forRootAsync({
+      useFactory: () => configurationService.getGoogleRecaptchaConfig()
+    }),
     ThrottlerModule.forRootAsync(configurationService.getThrottleConfig()),
     TypeOrmModule.forRootAsync(
       configurationService.getTypeOrmConfig(__dirname),

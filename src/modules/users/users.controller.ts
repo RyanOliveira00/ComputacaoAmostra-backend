@@ -10,7 +10,14 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiCookieAuth, ApiExtraModels, ApiHeader, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCookieAuth,
+  ApiExtraModels,
+  ApiHeader,
+  ApiProperty,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../common/decorators/guards/auth.decorator';
 import { SessionGuard } from '../../common/decorators/guards/session.decorator';
@@ -21,24 +28,21 @@ import { CreateVoteDto } from '../votes/dto/create-vote.dto';
 import { VotesService } from '../votes/votes.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
-import { validate } from 'class-validator';
+import { Recaptcha } from '@nestlab/google-recaptcha';
+
+class BodyWithCaptcha {
+  @ApiProperty()
+  captcha: string;
+}
 
 @Controller('users')
 @UseGuards(new AuthGuard('CLIENT'), SessionGuard)
 @ApiTags('User Routes')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService,
     private readonly votesService: VotesService,
     private readonly authService: AuthService,
   ) {}
-
-  @Get('validate_captcha')
-  @ApiCookieAuth()
-  @ApiHeader({ required: true, name: 'api' })
-  validateCaptcha(@Body() body: string) {
-    return this.usersService.validateCaptcha(body);
-  }
 
   @Public()
   @Put('generate_session')
@@ -58,21 +62,17 @@ export class UsersController {
   }
 
   @Post('vote')
+  @Recaptcha()
   @ApiCookieAuth()
   @ApiHeader({ required: true, name: 'api' })
   @ApiExtraModels(CreateVoteDto)
   async vote(
     @Query('projectId') projectId: string,
     @GetPropInSession('sub', ParseUUIDPipe) userId: string,
-    @Body() { captcha }: { captcha: string }
   ) {
-    if((await this.usersService.validateCaptcha(captcha)).success){
-      return await this.votesService.create({
-        projectId,
-        userId,
-      });
-    } else {
-      throw new UnauthorizedException('Invalid captcha')
-    }
+    return await this.votesService.create({
+      projectId,
+      userId,
+    });
   }
 }
