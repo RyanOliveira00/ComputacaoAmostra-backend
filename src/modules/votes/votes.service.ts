@@ -4,6 +4,9 @@ import { CalculateVotesService } from './calculate-votes.service';
 import { Repository } from 'typeorm';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { Vote } from './entities/vote.entity';
+import { Project } from '../projects/entities/project.entity';
+import { TVote } from './types';
+import { TUser } from '../users/types';
 
 @Injectable()
 export class VotesService {
@@ -16,12 +19,15 @@ export class VotesService {
   async create(createVoteDto: CreateVoteDto) {
     const vote = this.votesRepository.create(createVoteDto);
     const votes = await this.votesRepository.find({
+      relations: ['projectId', 'userId'],
       where: {
-        projectId: createVoteDto.projectId
+        projectId: {
+          id: createVoteDto.projectId
+        }
       }
     });
     const userVotes = votes.filter(
-      (vote) => vote.userId === createVoteDto.userId.toString(),
+      (vote: TVote) => (vote.userId as TUser).id.toString() === createVoteDto.userId.toString(),
     );
     await this.calculateVotesService.addVotesProject(
       createVoteDto.projectId,

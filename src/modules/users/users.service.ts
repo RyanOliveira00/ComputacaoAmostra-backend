@@ -36,8 +36,10 @@ export class UsersService {
     const { data } = await firstValueFrom(
       this.httpService
         .post('https://www.google.com/recaptcha/api/siteverify', {
-          secret: configurationService.getValue('CAPTCHA_SECRET'),
-          response: captchaResponse,
+          params: {
+            secret: configurationService.getValue('CAPTCHA_SECRET'),
+            response: captchaResponse,
+          }
         })
         .pipe(
           catchError(() => {
