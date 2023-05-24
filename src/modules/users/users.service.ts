@@ -32,15 +32,16 @@ export class UsersService {
     return users.sort((a, b) => a.voteCount - b.voteCount).reverse();
   }
 
-  async validateCaptcha(captchaResponse: string): Promise<{ success?: string, error?: string }> {
+  async validateCaptcha(
+    captchaResponse: string,
+  ): Promise<{ success?: string; error?: string }> {
     const { data } = await firstValueFrom(
       this.httpService
-        .post('https://www.google.com/recaptcha/api/siteverify', {
-          params: {
-            secret: configurationService.getValue('CAPTCHA_SECRET'),
-            response: captchaResponse,
-          }
-        })
+        .post(
+          `https://www.google.com/recaptcha/api/siteverify?secret=${configurationService.getValue(
+            'CAPTCHA_SECRET',
+          )}&response=${captchaResponse}`,
+        )
         .pipe(
           catchError(() => {
             throw 'Unexpected error';
