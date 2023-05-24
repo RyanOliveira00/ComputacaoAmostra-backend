@@ -39,8 +39,8 @@ export class UsersService {
       this.httpService
         .post(
           `https://www.google.com/recaptcha/api/siteverify?secret=${configurationService.getValue(
-            'CAPTCHA_SECRET',
-          )}&response=${captchaResponse}`,
+            'CAPTCHA_SECRET'
+          )}&response=${captchaResponse.replace('\"', '')}`,
         )
         .pipe(
           catchError(() => {
