@@ -90,7 +90,7 @@ export class ConfigurationService {
 
   public getGoogleRecaptchaConfig(): GoogleRecaptchaModuleOptions  {
     return {
-      response: req => req.headers.captcha,
+      response: req => req.body.captcha,
       secretKey: this.getValue('CAPTCHA_SECRET'),
       skipIf: this.isDevelopment()
     };

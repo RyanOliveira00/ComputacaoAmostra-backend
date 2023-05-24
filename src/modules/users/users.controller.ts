@@ -30,11 +30,6 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { Recaptcha } from '@nestlab/google-recaptcha';
 
-class BodyWithCaptcha {
-  @ApiProperty()
-  captcha: string;
-}
-
 @Controller('users')
 @UseGuards(new AuthGuard('CLIENT'), SessionGuard)
 @ApiTags('User Routes')
