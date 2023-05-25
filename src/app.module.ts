@@ -21,9 +21,6 @@ import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
       serveRoot: '/',
     }),
     ConfigModule.forRoot(),
-    GoogleRecaptchaModule.forRootAsync({
-      useFactory: () => configurationService.getGoogleRecaptchaConfig()
-    }),
     ThrottlerModule.forRootAsync(configurationService.getThrottleConfig()),
     TypeOrmModule.forRootAsync(
       configurationService.getTypeOrmConfig(__dirname),
