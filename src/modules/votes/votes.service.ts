@@ -18,17 +18,14 @@ export class VotesService {
 
   async create(createVoteDto: CreateVoteDto) {
     const vote = this.votesRepository.create(createVoteDto);
-    const votes = await this.votesRepository.find({
-      relations: ['projectId', 'userId'],
+    const userVotes = await this.votesRepository.find({
+      relations: ['userId'],
       where: {
-        projectId: {
-          id: createVoteDto.projectId
+        userId: {
+          id: createVoteDto.userId
         }
       }
     });
-    const userVotes = votes.filter(
-      (vote: TVote) => (vote.userId as TUser).id.toString() === createVoteDto.userId.toString(),
-    );
     await this.calculateVotesService.addVotesProject(
       createVoteDto.projectId,
       userVotes.length === 0,
