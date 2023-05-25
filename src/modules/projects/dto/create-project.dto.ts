@@ -36,7 +36,6 @@ class LinksDto {
   youtube: MultilanguageVideoDto;
   
   @IsOptional()
-  @IsUrl()
   @ApiProperty()
   banner?: string;
 }
