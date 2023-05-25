@@ -3,6 +3,7 @@ import { Logger } from '@nestjs/common';
 import { ThrottlerAsyncOptions } from '@nestjs/throttler';
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { GoogleRecaptchaModuleOptions } from '@nestlab/google-recaptcha';
+import { GoogleRecaptchaModuleAsyncOptions } from '@nestlab/google-recaptcha/interfaces/google-recaptcha-module-options';
 import { AbstractGoogleRecaptchaValidator } from '@nestlab/google-recaptcha/services/validators/abstract-google-recaptcha-validator';
 import { join } from 'path';
 
@@ -87,6 +88,15 @@ export class ConfigurationService {
       timeout: 5000,
       maxRedirects: 5,
     };
+  }
+  public getGoogleCaptchaConfig(): GoogleRecaptchaModuleAsyncOptions {
+    return {
+      useFactory: () => ({
+        secretKey: this.getValue('CAPTCHA_SECRET'),
+        response: res => res.query.response,
+        skipIf: this.isDevelopment()
+      })
+    }
   }
 }
 

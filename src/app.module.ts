@@ -25,6 +25,7 @@ import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
     TypeOrmModule.forRootAsync(
       configurationService.getTypeOrmConfig(__dirname),
     ),
+    GoogleRecaptchaModule.forRootAsync(configurationService.getGoogleCaptchaConfig()),
     HttpModule.register(configurationService.getHttpModuleConfig()),
     JwtModule.register({}),
     UsersModule,
