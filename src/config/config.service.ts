@@ -1,4 +1,5 @@
 import { HttpModuleOptions } from '@nestjs/axios';
+import { Logger } from '@nestjs/common';
 import { ThrottlerAsyncOptions } from '@nestjs/throttler';
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { GoogleRecaptchaModuleOptions } from '@nestlab/google-recaptcha';
@@ -85,14 +86,6 @@ export class ConfigurationService {
     return {
       timeout: 5000,
       maxRedirects: 5,
-    };
-  }
-
-  public getGoogleRecaptchaConfig(): GoogleRecaptchaModuleOptions  {
-    return {
-      response: req => req.body.data.captcha,
-      secretKey: this.getValue('CAPTCHA_SECRET'),
-      skipIf: this.isDevelopment()
     };
   }
 }

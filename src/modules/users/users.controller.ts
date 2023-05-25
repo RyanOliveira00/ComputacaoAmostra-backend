@@ -57,7 +57,6 @@ export class UsersController {
   }
 
   @Post('vote')
-  @Recaptcha()
   @ApiCookieAuth()
   @ApiHeader({ required: true, name: 'api' })
   @ApiExtraModels(CreateVoteDto)
