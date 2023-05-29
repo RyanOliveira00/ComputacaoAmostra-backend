@@ -78,7 +78,7 @@ export class ConfigurationService {
     return {
       useFactory: () => ({
         ttl: 60 * 20,
-        limit: 50,
+        limit: 420,
       }),
     };
   }
