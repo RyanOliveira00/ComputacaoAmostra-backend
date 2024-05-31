@@ -22,6 +22,7 @@ async function bootstrap() {
       'https://api.computacao-amostra.com',
       'http://api.computacao-amostra.com',
       'https://amazon-hacking-hml-frontend.vercel.app',
+      'https://amazon-hacking-frontend.vercel.app',
     ],
   });
   app.use(cookieParser());
